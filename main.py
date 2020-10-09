@@ -50,6 +50,9 @@ def get_latest_headlines():
 
     old_headlines = pickle.loads(r.get(LATEST_HEADLINES_KEY))
 
+    if old_headlines is None:
+        r.set(LATEST_HEADLINES_KEY, "")
+
     if old_headlines == headlines:
         return None
 
