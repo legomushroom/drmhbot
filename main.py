@@ -45,7 +45,7 @@ def get_latest_headlines():
             {"title": title, "url": url, "important": important, "italic": italic}
         )
 
-    r = redis.Redis()
+    r = redis.from_url(os.environ["REDIS_URL"])
 
     old_headlines = r.get(LATEST_HEADLINES_KEY)
 
