@@ -1,5 +1,6 @@
 import logging
 import os
+import pickle
 import sys
 
 import redis
@@ -47,12 +48,12 @@ def get_latest_headlines():
 
     r = redis.from_url(os.environ["REDIS_URL"])
 
-    old_headlines = r.get(LATEST_HEADLINES_KEY)
+    old_headlines = pickle.loads(r.get(LATEST_HEADLINES_KEY))
 
     if old_headlines == headlines:
         return None
 
-    r.set(LATEST_HEADLINES_KEY, headlines)
+    r.set(LATEST_HEADLINES_KEY, pickle.dumps(headlines))
 
     return headlines
 
