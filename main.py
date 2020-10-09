@@ -48,10 +48,12 @@ def get_latest_headlines():
 
     r = redis.from_url(os.environ["REDIS_URL"])
 
-    old_headlines = pickle.loads(r.get(LATEST_HEADLINES_KEY))
+    old_headlines = r.get(LATEST_HEADLINES_KEY)
 
     if old_headlines is None:
         r.set(LATEST_HEADLINES_KEY, "")
+    else:
+        old_headlines = pickle.loads(old_headlines)
 
     if old_headlines == headlines:
         return None
