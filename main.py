@@ -96,8 +96,8 @@ def main():
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
             )
-    except:  # noqa: E722
-        sys.exit(1)
+    except Exception as e:
+        sys.exit(e)
 
     sys.exit(0)
 
