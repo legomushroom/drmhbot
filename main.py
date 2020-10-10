@@ -35,9 +35,9 @@ def parse_headlines(html_doc):
         if child is not None:
             if child.name == "font" and child["color"] == "red":
                 important = True
-
-        if headline.parent.name == "i":
-            italic = True
+            elif child.name == "i":
+                # TODO: validate this fix
+                italic = True
 
         headlines.append(
             {"title": title, "url": url, "important": important, "italic": italic}
