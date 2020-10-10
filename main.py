@@ -84,9 +84,9 @@ def build_message(headlines):
         article = f"[{title}]({url})"
 
         if important:
-            article = f"**{article}**"
-        elif italic:
             article = f"*{article}*"
+        elif italic:
+            article = f"_{article}_"
 
         message += f"- {article}\n"
 
