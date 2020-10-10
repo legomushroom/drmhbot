@@ -15,10 +15,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def get_latest_headlines():
-    LATEST_HEADLINES_KEY = "latest_headlines"
-
-    html_doc = requests.get("https://drudgereport.com").content
+def parse_headlines(html_doc):
     soup = BeautifulSoup(html_doc, "html.parser")
 
     headlines_el = soup.select_one("body > tt > b > tt > b > center")
@@ -46,6 +43,15 @@ def get_latest_headlines():
             {"title": title, "url": url, "important": important, "italic": italic}
         )
 
+    return headlines
+
+
+def get_latest_headlines():
+    LATEST_HEADLINES_KEY = "latest_headlines"
+
+    html_doc = requests.get("https://drudgereport.com").content
+    headlines = parse_headlines(html_doc)
+
     r = redis.from_url(os.environ["REDIS_URL"])
 
     old_headlines = r.get(LATEST_HEADLINES_KEY)
@@ -67,7 +73,6 @@ def build_message(headlines):
     if headlines is None:
         return None
 
-    # TODO: Handle italic headlines
     message = ""
 
     for headline in headlines:
