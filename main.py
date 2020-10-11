@@ -36,7 +36,6 @@ def parse_headlines(html_doc):
             if child.name == "font" and child["color"] == "red":
                 important = True
             elif child.name == "i":
-                # TODO: validate this fix
                 italic = True
 
         headlines.append(
@@ -81,12 +80,13 @@ def build_message(headlines):
         important = headline["important"]
         italic = headline["italic"]
 
-        article = f"[{title}]({url})"
-
-        if important:
-            article = f"*{article}*"
-        elif italic:
-            article = f"_{article}_"
+        article = (
+            f"[*{title}*]({url})"
+            if important
+            else f"[_{title}_]({url})"
+            if italic
+            else f"[{title}]({url})"
+        )
 
         message += f"- {article}\n"
 
