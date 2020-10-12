@@ -2,6 +2,7 @@ import logging
 import os
 import pickle
 import sys
+from typing import List, NoReturn, Optional, TypedDict
 
 import redis
 import requests
@@ -16,7 +17,14 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def parse_headlines(html_doc):
+class Headline(TypedDict):
+    title: str
+    url: str
+    important: bool
+    italic: bool
+
+
+def parse_headlines(html_doc: bytes) -> List[Headline]:
     soup = BeautifulSoup(html_doc, "html.parser")
 
     headlines_el = soup.select_one("body > tt > b > tt > b > center")
@@ -46,7 +54,7 @@ def parse_headlines(html_doc):
     return headlines
 
 
-def get_latest_headlines():
+def get_latest_headlines() -> Optional[List[Headline]]:
     LATEST_HEADLINES_KEY = "latest_headlines"
 
     html_doc = requests.get("https://drudgereport.com").content
@@ -69,7 +77,7 @@ def get_latest_headlines():
     return headlines
 
 
-def build_message(headlines):
+def build_message(headlines: Optional[List[Headline]]) -> Optional[str]:
     if headlines is None:
         return None
 
@@ -94,7 +102,7 @@ def build_message(headlines):
     return message
 
 
-def main():
+def main() -> NoReturn:
     token = os.environ["TOKEN"]
     bot = Bot(token)
 
