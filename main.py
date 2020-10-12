@@ -28,7 +28,7 @@ def parse_headlines(html_doc: bytes) -> List[Headline]:
     soup = BeautifulSoup(html_doc, "html.parser")
 
     headlines_el = soup.select_one("body > tt > b > tt > b > center")
-    headlines = []
+    headlines: List[Headline] = []
 
     for headline in headlines_el.select("a"):
         if headline is None:
