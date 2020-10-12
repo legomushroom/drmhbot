@@ -113,7 +113,7 @@ def main() -> NoReturn:
             bot.send_message(
                 chat_id="@DrudgeReportHeadlines",
                 text=message,
-                parse_mode=ParseMode.MARKDOWN,
+                parse_mode=ParseMode.MARKDOWN_V2,
                 disable_web_page_preview=True,
             )
     except Exception as e:
