@@ -7,6 +7,7 @@ import redis
 import requests
 from bs4 import BeautifulSoup
 from telegram import Bot, ParseMode
+from telegram.utils.helpers import escape_markdown
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -75,8 +76,8 @@ def build_message(headlines):
     message = ""
 
     for headline in headlines:
-        title = headline["title"]
-        url = headline["url"]
+        title = escape_markdown(headline["title"], version=2)
+        url = escape_markdown(headline["url"], version=2, entity_type="text_link")
         important = headline["important"]
         italic = headline["italic"]
 
@@ -88,7 +89,7 @@ def build_message(headlines):
             else f"[{title}]({url})"
         )
 
-        message += f"- {article}\n"
+        message += f"\\- {article}\n"
 
     return message
 
