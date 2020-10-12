@@ -1,6 +1,6 @@
+import json
 import logging
 import os
-import pickle
 import sys
 from typing import List, NoReturn, Optional, TypedDict
 
@@ -67,12 +67,12 @@ def get_latest_headlines() -> Optional[List[Headline]]:
     if old_headlines is None:
         r.set(LATEST_HEADLINES_KEY, "")
     else:
-        old_headlines = pickle.loads(old_headlines)
+        old_headlines = json.loads(old_headlines)
 
     if old_headlines == headlines:
         return None
 
-    r.set(LATEST_HEADLINES_KEY, pickle.dumps(headlines))
+    r.set(LATEST_HEADLINES_KEY, json.dumps(headlines))
 
     return headlines
 
