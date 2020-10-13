@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import sys
-from typing import List, NoReturn, Optional, TypedDict
+from typing import List, NoReturn, Optional
 
 import redis
 import requests
@@ -10,18 +10,13 @@ from bs4 import BeautifulSoup
 from telegram import Bot, ParseMode
 from telegram.utils.helpers import escape_markdown
 
+from headline import Headline
+
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 
 logger = logging.getLogger(__name__)
-
-
-class Headline(TypedDict):
-    title: str
-    url: str
-    important: bool
-    italic: bool
 
 
 def parse_headlines(html_doc: bytes) -> List[Headline]:
