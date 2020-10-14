@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import sys
+from functools import partial
 from typing import List, NoReturn, Optional
 
 import redis
@@ -73,14 +74,16 @@ def get_latest_headlines() -> Optional[List[Headline]]:
 
 
 def build_message(headlines: Optional[List[Headline]]) -> Optional[str]:
+    escape_v2 = partial(escape_markdown, version=2)
+
     if headlines is None:
         return None
 
     message = ""
 
     for headline in headlines:
-        title = escape_markdown(headline["title"], version=2)
-        url = escape_markdown(headline["url"], version=2, entity_type="text_link")
+        title = escape_v2(headline["title"])
+        url = escape_v2(headline["url"], entity_type="text_link")
         important = headline["important"]
         italic = headline["italic"]
 
