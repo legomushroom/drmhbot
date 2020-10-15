@@ -19,6 +19,8 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+escape_v2 = partial(escape_markdown, version=2)
+
 
 def parse_headlines(html_doc: bytes) -> List[Headline]:
     soup = BeautifulSoup(html_doc, "html.parser")
@@ -73,29 +75,29 @@ def get_latest_headlines() -> Optional[List[Headline]]:
     return headlines
 
 
-def build_message(headlines: Optional[List[Headline]]) -> Optional[str]:
-    escape_v2 = partial(escape_markdown, version=2)
+def build_article(headline: Headline) -> str:
+    title = escape_v2(headline["title"])
+    url = escape_v2(headline["url"], entity_type="text_link")
+    important = headline["important"]
+    italic = headline["italic"]
 
+    return (
+        f"[*{title}*]({url})"
+        if important
+        else f"[_{title}_]({url})"
+        if italic
+        else f"[{title}]({url})"
+    )
+
+
+def build_message(headlines: Optional[List[Headline]]) -> Optional[str]:
     if headlines is None:
         return None
 
     message = ""
 
     for headline in headlines:
-        title = escape_v2(headline["title"])
-        url = escape_v2(headline["url"], entity_type="text_link")
-        important = headline["important"]
-        italic = headline["italic"]
-
-        article = (
-            f"[*{title}*]({url})"
-            if important
-            else f"[_{title}_]({url})"
-            if italic
-            else f"[{title}]({url})"
-        )
-
-        message += f"\\- {article}\n"
+        message += f"\\- {build_article(headline)}\n"
 
     return message
 
