@@ -1,7 +1,0 @@
-TODO
-
-[ ] logging
-[ ] modular
-[ ] tests
-[ ] handle italic important stories (<i><a href="https://www.cnn.com/2020/10/16/politics/donald-trump-criticism-from-former-administration-officials/index.html" nopush=""><font color="red">'MOST FLAWED PERSON' EVER</font></a></i>)
-[ ] rewrite?
