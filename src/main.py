@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from telegram import Bot, ParseMode
 from telegram.utils.helpers import escape_markdown
 
-from headline import Headline
+from .headline import Headline
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
