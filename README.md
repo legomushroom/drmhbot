@@ -8,8 +8,8 @@ The bot currently runs "serverlessly" on Heroku. [Heroku Scheduler][scheduler]
 runs the `main.py` file every hour on the hour. Persistence is handled using
 [Heroku Redis][redis].
 
-This codebase is by no means an example of sound engineering practices, but it
-seems to work well enough in practice, and it doesn't cost me one penny to run.
+This codebase is by no means an example of sound engineering practice, but it
+seems to work well enough, and it doesn't cost me one penny to run.
 
 [bot]: https://t.me/DrudgeReportHeadlinesBot
 [drudge]: https://drudgereport.com
