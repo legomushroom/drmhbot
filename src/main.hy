@@ -87,3 +87,25 @@
   (setv message (map (fn [headline] f"\\- {(build-article headline)}")))
   
   (.join "\n" message))
+
+(defn main []
+  (setv token (get os.environ "TOKEN"))
+  (setv bot (Bot token))
+  
+  (try
+    (do
+      (setv message (build-message (get-latest-headlines)))
+      
+      (if (not (none? message))
+        (bot.send-message
+          :chat-id "@DrudgeReportHeadlines"
+          :text message
+          :parse-mode ParseMode.MARKDOWN_V2
+          :disable-web-page-preview True)))
+    (except [e Exception]
+      (sys.exit e)))
+  
+  (sys.exit 0))
+
+(if (= __name__ "__main__")
+  (main))
