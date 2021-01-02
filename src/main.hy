@@ -1,7 +1,6 @@
 (import json)
 (import logging)
 (import os)
-(import sys)
 (import [functools [partial]])
 
 (import redis)
@@ -92,20 +91,14 @@
   (setv token (get os.environ "TOKEN"))
   (setv bot (Bot token))
   
-  (try
-    (do
-      (setv message (build-message (get-latest-headlines)))
-      
-      (if (not (none? message))
-        (bot.send-message
-          :chat-id "@DrudgeReportHeadlines"
-          :text message
-          :parse-mode ParseMode.MARKDOWN_V2
-          :disable-web-page-preview True)))
-    (except [e Exception]
-      (sys.exit e)))
+  (setv message (build-message (get-latest-headlines)))
   
-  (sys.exit 0))
+  (if (not (none? message))
+    (bot.send-message
+      :chat-id "@DrudgeReportHeadlines"
+      :text message
+      :parse-mode ParseMode.MARKDOWN_V2
+      :disable-web-page-preview True)))
 
 (if (= __name__ "__main__")
   (main))
