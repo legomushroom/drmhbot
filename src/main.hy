@@ -79,3 +79,11 @@
     [important? f"[*{title}*]({url})"]
     [italic? f"[_{title}_]({url})"]
     [True f"[{title}]({url})"]))
+
+(defn build-message [headlines]
+  (if (none? headlines)
+    (return None))
+  
+  (setv message (map (fn [headline] f"\\- {(build-article headline)}")))
+  
+  (.join "\n" message))
