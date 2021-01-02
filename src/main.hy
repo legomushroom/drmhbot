@@ -13,7 +13,7 @@
   :format "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
   :level logging.INFO)
 
-(setv logger (logging.getLogger __name__))
+(setv logger (logging.getLogger --name--))
 
 ; TODO: replace with macro
 (setv escape-v2 (partial escape_markdown :version 2))
@@ -34,7 +34,7 @@
     (setv important? False)
     (setv italic? False)
     
-    (if (not (none? child))
+    (unless (none? child))
       (cond
         [(and
             (= (.name child) "font")
@@ -88,18 +88,15 @@
   
   (.join "\n" message))
 
-(defn main []
+(defmain [&rest args]
   (setv token (get os.environ "TOKEN"))
   (setv bot (Bot token))
   
   (setv message (build-message (get-latest-headlines)))
   
-  (if (not (none? message))
+  (unless (none? message))
     (bot.send-message
       :chat-id "@DrudgeReportHeadlines"
       :text message
       :parse-mode ParseMode.MARKDOWN_V2
       :disable-web-page-preview True)))
-
-(if (= __name__ "__main__")
-  (main))
