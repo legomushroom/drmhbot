@@ -46,13 +46,13 @@
     (.append headlines {:title title
                         :url url
                         :important? important?
-                        :italic? italic?}))
+                        :italic? italic?})
 
     headlines)
 
 (defn get-latest-headlines []
   (setv latest-headlines-key "latest_headlines")
-  (setv html-doc (py "requests.get('https://drudgereport.com').content"))
+  (setv html-doc (. (requests.get "https://drudgereport.com") content))
   (setv headlines (parse-headlines html-doc))
   (setv redis-client (redis.from-url (get os.environ "REDIS_URL")))
   (setv old-headlines (redis-client.get latest-headlines-key))
@@ -99,4 +99,4 @@
       :chat-id "@DrudgeReportHeadlines"
       :text message
       :parse-mode ParseMode.MARKDOWN_V2
-      :disable-web-page-preview True)))
+      :disable-web-page-preview True))
