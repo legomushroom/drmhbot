@@ -18,3 +18,35 @@
 
 ; TODO: replace with macro
 (setv escape-v2 (partial escape_markdown :version 2))
+
+(defn parse-headlines [html-doc]
+  (setv soup (BeautifulSoup html-doc "html.parser"))
+  (setv selector "body > tt > b > tt > b > center")
+  (setv headlines-element (soup.select-one selector))
+  (setv headlines [])
+  
+  ; TODO: rewrite using map
+  (for [headline headlines]
+    (if (none? headline)
+      (continue))
+      
+    (setv title (.get-text headline))
+    (setv url (get headline "href"))
+    (setv important? False)
+    (setv italic? False)
+    
+    (if (not (none? child))
+      (cond
+        [(and
+            (= (.name child) "font")
+            (= (get child "color") "red"))
+          (setv important? True)]
+        [(= (.name child) "i")
+          (setv italic? True)])))
+          
+    (.append headlines {:title title
+                        :url url
+                        :important? important?
+                        :italic? italic?})
+
+    headlines)
