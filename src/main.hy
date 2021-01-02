@@ -84,7 +84,7 @@
   (if (none? headlines)
     (return None))
   
-  (setv message (map (fn [headline] f"\\- {(build-article headline)}")))
+  (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
   
   (.join "\n" message))
 
