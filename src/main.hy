@@ -68,3 +68,14 @@
   (redis-client.set latest-headlines-key (json.dumps headlines))
 
   headlines)
+
+(defn build-article [headline]
+  (setv title (escape-v2 (get headline :title)))
+  (setv url (escape_v2 (get headline :url) :entity_type "text_link"))
+  (setv important? (get headline :important?))
+  (setv italic? (get headline :italic?))
+  
+  (cond
+    [important? f"[*{title}*]({url})"]
+    [italic? f"[_{title}_]({url})"]
+    [True f"[{title}]({url})"]))
