@@ -42,12 +42,12 @@
             (= (get child "color") "red"))
           (setv important? True)]
         [(= (.name child) "i")
-          (setv italic? True)])))
-          
+          (setv italic? True)]))
+
     (.append headlines {:title title
                         :url url
                         :important? important?
-                        :italic? italic?})
+                        :italic? italic?}))
 
     headlines)
 
