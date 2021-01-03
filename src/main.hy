@@ -9,6 +9,8 @@
 (import [telegram [Bot ParseMode]])
 (import [telegram.utils.helpers [escape-markdown]])
 
+(require [hy.contrib.walk [let]])
+
 (logging.basicConfig
   :format "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
   :level logging.INFO)
@@ -22,12 +24,11 @@
   (setv selector "body > tt > b > tt > b > center")
   (setv headlines-element (soup.select-one selector))
   (setv headlines [])
-  
-  ; TODO: rewrite using map
-  (for [headline (headlines-element.select "a")]
+
+  (defn parse-headline [headline]
     (if (none? headline)
-      (continue))
-      
+      (return))
+
     (setv title (.get-text headline))
     (setv url (get headline "href"))
     (setv important? False)
@@ -43,11 +44,17 @@
           (setv important? True)]
         [(= (. child name) "i")
           (setv italic? True)]))
-
-    (.append headlines {:title title
-                        :url url
-                        :important? important?
-                        :italic? italic?}))
+    
+    {:title title
+     :url url
+     :important? important?
+     :italic? italic?})
+  
+  ; TODO: rewrite using map
+  (for [headline (headlines-element.select "a")]
+    (let [parsed-headline (parse-headline headline)]
+      (unless (none? parsed-headline)
+        (.append headlines parsed-headline))))
 
     headlines)
 
