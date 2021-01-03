@@ -41,7 +41,7 @@
             (= (. child name) "font")
             (= (get child "color") "red"))
           (setv important? True)]
-        [(= (.name child) "i")
+        [(= (. child name) "i")
           (setv italic? True)]))
 
     (.append headlines {:title title
