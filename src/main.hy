@@ -95,9 +95,9 @@
   
   (setv message (build-message (get-latest-headlines)))
   
-  (unless (none? message))
+  (unless (none? message)
     (bot.send-message
       :chat-id "@DrudgeReportHeadlines"
       :text message
       :parse-mode ParseMode.MARKDOWN_V2
-      :disable-web-page-preview True))
+      :disable-web-page-preview True)))
