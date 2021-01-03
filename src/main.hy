@@ -24,7 +24,7 @@
   (setv headlines [])
   
   ; TODO: rewrite using map
-  (for [headline headlines]
+  (for [headline (headlines-element.select "a")]
     (if (none? headline)
       (continue))
       
@@ -32,11 +32,13 @@
     (setv url (get headline "href"))
     (setv important? False)
     (setv italic? False)
+
+    (setv child (.findChild headline))
     
-    (unless (none? child))
+    (unless (none? child)
       (cond
         [(and
-            (= (.name child) "font")
+            (= (. child name) "font")
             (= (get child "color") "red"))
           (setv important? True)]
         [(= (.name child) "i")
@@ -45,7 +47,7 @@
     (.append headlines {:title title
                         :url url
                         :important? important?
-                        :italic? italic?})
+                        :italic? italic?}))
 
     headlines)
 
