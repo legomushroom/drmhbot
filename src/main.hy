@@ -9,8 +9,6 @@
 (import [telegram [Bot ParseMode]])
 (import [telegram.utils.helpers [escape-markdown]])
 
-(require [hy.contrib.walk [let]])
-
 (logging.basicConfig
   :format "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
   :level logging.INFO)
@@ -50,13 +48,8 @@
      :important? important?
      :italic? italic?})
   
-  ; TODO: rewrite using map
-  (for [headline (headlines-element.select "a")]
-    (let [parsed-headline (parse-headline headline)]
-      (unless (none? parsed-headline)
-        (.append headlines parsed-headline))))
-
-    headlines)
+  (filter (comp not none?)
+    (map (fn [headline] (parse-headline headline)) (headlines-element.select "a"))))
 
 (defn get-latest-headlines []
   (setv latest-headlines-key "latest_headlines")
