@@ -81,13 +81,9 @@
     [True f"[{title}]({url})"]))
 
 (defn build-message [headlines]
-  (if (none? headlines)
-    (return None))
-  
-  (setv message
-    (map (fn [headline] f"\\- {(build-article headline)}") headlines))
-  
-  (.join "\n" message))
+  (unless (none? headlines)
+    (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
+    (.join "\n" message)))
 
 (defmain [&rest args]
   (setv token (get os.environ "TOKEN"))
