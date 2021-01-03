@@ -7,7 +7,7 @@
 (import requests)
 (import [bs4 [BeautifulSoup]])
 (import [telegram [Bot ParseMode]])
-(import [telegram.utils.helpers [escape_markdown]])
+(import [telegram.utils.helpers [escape-markdown]])
 
 (logging.basicConfig
   :format "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -15,7 +15,7 @@
 
 (setv logger (logging.getLogger --name--))
 
-(setv escape-v2 (partial escape_markdown :version 2))
+(setv escape-v2 (partial escape-markdown :version 2))
 
 (defn parse-headlines [html-doc]
   (setv soup (BeautifulSoup html-doc "html.parser"))
@@ -71,7 +71,7 @@
 
 (defn build-article [headline]
   (setv title (escape-v2 (get headline :title)))
-  (setv url (escape_v2 (get headline :url) :entity_type "text_link"))
+  (setv url (escape_v2 (get headline :url) :entity-type "text_link"))
   (setv important? (get headline :important?))
   (setv italic? (get headline :italic?))
   
