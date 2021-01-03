@@ -15,7 +15,6 @@
 
 (setv logger (logging.getLogger --name--))
 
-; TODO: replace with macro
 (setv escape-v2 (partial escape_markdown :version 2))
 
 (defn parse-headlines [html-doc]
