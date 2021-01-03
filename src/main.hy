@@ -44,10 +44,10 @@
         [(= (. child name) "i")
           (setv italic? True)]))
 
-    (.append headlines {"title" title
-                        "url" url
-                        "is-important" important?
-                        "is-italic" italic?}))
+    (.append headlines {:title title
+                        :url url
+                        :important? important?
+                        :italic? italic?}))
 
     headlines)
 
@@ -70,10 +70,10 @@
   headlines)
 
 (defn build-article [headline]
-  (setv title (escape-v2 (get headline "title")))
-  (setv url (escape_v2 (get headline "url") :entity_type "text_link"))
-  (setv important? (get headline "is-important"))
-  (setv italic? (get headline "is-italic"))
+  (setv title (escape-v2 (get headline :title)))
+  (setv url (escape_v2 (get headline :url) :entity_type "text_link"))
+  (setv important? (get headline :important?))
+  (setv italic? (get headline :italic?))
   
   (cond
     [important? f"[*{title}*]({url})"]
