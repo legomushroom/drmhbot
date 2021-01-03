@@ -1,4 +1,16 @@
 {
   "python.formatting.provider": "black",
-  "python.pythonPath": "/Users/julia/Library/Caches/pypoetry/virtualenvs/drmhbot-fUc8zcgG-py3.9/bin/python"
+  "python.pythonPath": "/Users/julia/Library/Caches/pypoetry/virtualenvs/drmhbot-fUc8zcgG-py3.9/bin/python",
+  "[hy]": {
+    "editor.rulers": [
+      {
+        "column": 72,
+        "color": "#ffff00"
+      },
+      {
+        "column": 99,
+        "color": "#ff0000"
+      }
+    ]
+  }
 }
