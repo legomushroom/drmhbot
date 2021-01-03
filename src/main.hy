@@ -1,4 +1,4 @@
-(import json)
+(import pickle)
 (import logging)
 (import os)
 (import [functools [partial]])
@@ -60,12 +60,12 @@
   
   (if (none? old_headlines)
     (redis-client.set latest-headlines-key "")
-    (setv old-headlines (json.loads old-headlines)))
+    (setv old-headlines (pickle.loads old-headlines)))
 
   (if (= old-headlines headlines)
     (return None))
   
-  (redis-client.set latest-headlines-key (json.dumps headlines))
+  (redis-client.set latest-headlines-key (pickle.dumps headlines))
 
   headlines)
 
