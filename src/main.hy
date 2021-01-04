@@ -36,7 +36,7 @@
       (setv child-name (. child-element name))
 
       (cond
-        [(and (= child-name "font") (= (get child "color") "red"))
+        [(and (= child-name "font") (= (get child-element "color") "red"))
           (setv important? True)]
         [(= child-name "i")
           (setv italic? True)])
