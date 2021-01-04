@@ -1,15 +1,15 @@
 # drmhbot
 
-This is the source code for the [@DrudgeReportHeadlinesBot][bot]. It posts the
-"main" headlines on the [Drudge Report][drudge] website to the
+This is the source code for that powers [@DrudgeReportHeadlinesBot][bot]. It
+posts the "main" [Drudge Report][drudge] headlines to the
 [@DrudgeReportHeadlines][channel] Telegram channel.
 
-The bot currently runs "serverlessly" on Heroku. [Heroku Scheduler][scheduler]
-runs the `main.py` file every hour on the hour. Persistence is handled using
-[Heroku Redis][redis].
+The bot is currently running "serverlessly" on Heroku.
+[Heroku Scheduler][scheduler] runs `hy src/main.hy` every hour on the hour.
+Persistence is handled using [Heroku Redis][redis].
 
-This codebase is by no means an example of sound engineering practice, but it
-seems to work well enough, and it doesn't cost me one penny to run.
+I hope to transition the bot to a "true" serverless environment one day.
+Until then, this seems to work well enough. And it doesn't cost me anything.
 
 [bot]: https://t.me/DrudgeReportHeadlinesBot
 [drudge]: https://drudgereport.com
