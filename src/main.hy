@@ -45,8 +45,9 @@
      :important? important?
      :italic? italic?})
   
-  (filter (comp not none?)
-    (map (fn [headline] (parse-headline headline)) (headlines-element.select "a"))))
+  (list
+    (filter (comp not none?)
+      (map (fn [headline] (parse-headline headline)) (headlines-element.select "a")))))
 
 (defn get-latest-headlines []
   (setv latest-headlines-key "latest_headlines")
@@ -68,7 +69,7 @@
 
 (defn build-article [headline]
   (setv title (escape-v2 (get headline :title))
-        url (escape_v2 (get headline :url) :entity-type "text_link")
+        url (escape-v2 (get headline :url) :entity-type "text_link")
         important? (get headline :important?)
         italic? (get headline :italic?))
   
