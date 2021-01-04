@@ -30,20 +30,21 @@
           important? False
           italic? False)
 
-    (setv child-element (.findChild headline)
-          child-name (. child-element name))
+    (setv child-element (.findChild headline))
     
     (unless (none? child-element)
+      (setv child-name (. child-element name))
+
       (cond
         [(and (= child-name "font") (= (get child "color") "red"))
           (setv important? True)]
         [(= child-name "i")
-          (setv italic? True)]))
+          (setv italic? True)])
     
-    {:title title
-     :url url
-     :important? important?
-     :italic? italic?})
+      {:title title
+       :url url
+       :important? important?
+       :italic? italic?}))
   
   (list
     (filter (comp not none?)
