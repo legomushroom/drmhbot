@@ -39,12 +39,12 @@
         [(and (= child-name "font") (= (get child-element "color") "red"))
           (setv important? True)]
         [(= child-name "i")
-          (setv italic? True)])
+          (setv italic? True)]))
     
       {:title title
        :url url
        :important? important?
-       :italic? italic?}))
+       :italic? italic?})
   
   (list
     (filter (comp not none?)
