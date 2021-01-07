@@ -83,9 +83,7 @@
       [italic? f"[_{title}_]({url})"]
       [True f"[{title}]({url})"]))
     
-    (setv source-name (escape-v2 f"({(sources.source-name-from-url url)})"))
-
-    (print f"{article} \({source-name}\)")
+    (setv source-name (escape-v2 f"`{(sources.source-name-from-url url)}`"))
     
     f"{article} \({source-name}\)")
 
