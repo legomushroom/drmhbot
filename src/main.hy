@@ -83,7 +83,8 @@
       [italic? f"[_{title}_]({url})"]
       [True f"[{title}]({url})"]))
     
-    (setv source-name (escape-v2 f"`{(sources.source-name-from-url url)}`"))
+    ; TODO: move source name to parse-headlines
+    (setv source-name f"`{(escape-v2 (sources.source-name-from-url url))}`")
     
     f"{article} \({source-name}\)")
 
