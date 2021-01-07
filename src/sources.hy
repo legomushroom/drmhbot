@@ -5,7 +5,8 @@
                 "www.dailymail.co.uk" "Daily Mail"
                 "www.axios.com" "Axios"
                 "www.nbcnews.com" "NBC News"
-                "apnews.com" "AP"})
+                "apnews.com" "AP"
+                "news.yahoo.com" "Yahoo! News"})
 
 (defn source-name-from-url [url]
   (setv host-name (. (parse-url url) netloc))
