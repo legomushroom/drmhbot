@@ -9,6 +9,8 @@
         redis
         requests)
 
+(import sources)
+
 (logging.basicConfig :format "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
                      :level logging.INFO)
 
@@ -17,10 +19,6 @@
 (setv escape-v2 (partial escape-markdown :version 2))
 
 (defn parse-headlines [html-doc]
-  (setv soup (BeautifulSoup html-doc "html.parser")
-        selector "body > tt > b > tt > b > center"
-        headlines-element (soup.select-one selector))
-
   (defn parse-headline [headline]
     (if (none? headline)
       (return))
@@ -45,6 +43,10 @@
        :url url
        :important? important?
        :italic? italic?})
+
+  (setv soup (BeautifulSoup html-doc "html.parser")
+        selector "body > tt > b > tt > b > center"
+        headlines-element (soup.select-one selector))
   
   (list
     (filter (comp not none?)
@@ -69,18 +71,22 @@
 
   headlines)
 
-(defn build-article [headline]
-  (setv title (escape-v2 (get headline :title))
-        url (escape-v2 (get headline :url) :entity-type "text_link")
-        important? (get headline :important?)
-        italic? (get headline :italic?))
-  
-  (cond
-    [important? f"[*{title}*]({url})"]
-    [italic? f"[_{title}_]({url})"]
-    [True f"[{title}]({url})"]))
-
 (defn build-message [headlines]
+  (defn build-article [headline]
+    (setv title (escape-v2 (get headline :title))
+          url (escape-v2 (get headline :url) :entity-type "text_link")
+          important? (get headline :important?)
+          italic? (get headline :italic?))
+    
+    (setv article (cond
+      [important? f"[*{title}*]({url})"]
+      [italic? f"[_{title}_]({url})"]
+      [True f"[{title}]({url})"]))
+    
+    (setv source-name (sources.source-name-from-url url))
+    
+    f"{article} ({source-name})")
+
   (unless (none? headlines)
     (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
     (.join "\n" message)))
