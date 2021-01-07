@@ -85,7 +85,7 @@
     
     (setv source-name (sources.source-name-from-url url))
     
-    f"{article} ({source-name})")
+    f"{article} \({source-name}\)")
 
   (unless (none? headlines)
     (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
