@@ -84,6 +84,8 @@
       [True f"[{title}]({url})"]))
     
     (setv source-name (sources.source-name-from-url url))
+
+    (print f"{article} \({source-name}\)")
     
     f"{article} \({source-name}\)")
 
