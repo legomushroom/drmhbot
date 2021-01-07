@@ -51,13 +51,14 @@
       (map (fn [headline] (parse-headline headline)) (headlines-element.select "a")))))
 
 (defn get-latest-headlines []
-  (setv latest-headlines-key "latest_headlines")
-  (setv html-doc (. (requests.get "https://drudgereport.com") content))
-  (setv headlines (parse-headlines html-doc))
-  (setv redis-client (redis.from-url (get os.environ "REDIS_URL")))
-  (setv old-headlines (redis-client.get latest-headlines-key))
+  (setv html-doc (. (requests.get "https://drudgereport.com") content)
+        headlines (parse-headlines html-doc))
   
-  (if (none? old_headlines)
+  (setv latest-headlines-key "latest-headlines"
+        redis-client (redis.from-url (get os.environ "REDIS_URL"))
+        old-headlines (redis-client.get latest-headlines-key))
+  
+  (if (none? old-headlines)
     (redis-client.set latest-headlines-key "")
     (setv old-headlines (pickle.loads old-headlines)))
 
