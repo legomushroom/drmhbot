@@ -13,6 +13,6 @@ Until then, this seems to work well enough. And it doesn't cost me anything.
 
 [bot]: https://t.me/DrudgeReportHeadlinesBot
 [drudge]: https://drudgereport.com
-[channel]: https://t.me/DrudgeReportHeadlines
+[channel]: https://t.me/s/DrudgeReportHeadlines
 [scheduler]: https://elements.heroku.com/addons/scheduler
 [redis]: https://elements.heroku.com/addons/heroku-redis
