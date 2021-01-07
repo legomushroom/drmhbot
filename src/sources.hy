@@ -8,7 +8,10 @@
                 "apnews.com" "AP"
                 "news.yahoo.com" "Yahoo! News"})
 
-(defn source-name-from-url [url]
+(defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
   
-  (.get -sources host-name host-name))
+  (try
+    (, :named (get -sources host-name))
+    (except [KeyError]
+      (, :unnamed host-name))))

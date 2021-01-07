@@ -25,6 +25,7 @@
 
     (setv title (.get-text headline)
           url (get headline "href")
+          source (sources.source-from-url url)
           important? False
           italic? False)
 
@@ -41,6 +42,7 @@
     
       {:title title
        :url url
+       :source source
        :important? important?
        :italic? italic?})
 
@@ -75,6 +77,7 @@
   (defn build-article [headline]
     (setv title (escape-v2 (get headline :title))
           url (escape-v2 (get headline :url) :entity-type "text_link")
+          source (get headline :source)
           important? (get headline :important?)
           italic? (get headline :italic?))
     
@@ -83,10 +86,13 @@
       [italic? f"[_{title}_]({url})"]
       [True f"[{title}]({url})"]))
     
-    ; TODO: move source name to parse-headlines
-    (setv source-name f"`{(escape-v2 (sources.source-name-from-url url))}`")
+    (setv [type name] source)
+
+    (if (= type :named)
+      (setv escaped-name (escape-v2 name)
+      (setv escaped-name f"`{(escape-v2 name)}`")))
     
-    f"{article} \({source-name}\)")
+    f"{article} \({escaped-name}\)")
 
   (unless (none? headlines)
     (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
