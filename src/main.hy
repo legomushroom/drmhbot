@@ -89,8 +89,8 @@
     (setv [type name] source)
 
     (if (= type :named)
-      (setv escaped-name (escape-v2 name)
-      (setv escaped-name f"`{(escape-v2 name)}`")))
+      (setv escaped-name (escape-v2 name))
+      (setv escaped-name f"`{(escape-v2 name)}`"))
     
     f"{article} \({escaped-name}\)")
 
