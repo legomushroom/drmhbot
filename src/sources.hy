@@ -7,7 +7,9 @@
                 "www.nbcnews.com" "NBC News"
                 "apnews.com" "AP"
                 "news.yahoo.com" "Yahoo! News"
-                "www.cnbc.com" "CNBC"})
+                "www.cnbc.com" "CNBC"
+                "www.thedailybeast.com" "The Daily Beast"
+                "www.cnn.com" "CNN"})
 
 (defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
