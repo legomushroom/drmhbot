@@ -8,7 +8,8 @@
                 "apnews.com" "AP"
                 "www.cnbc.com" "CNBC"
                 "www.thedailybeast.com" "The Daily Beast"
-                "www.cnn.com" "CNN"})
+                "www.cnn.com" "CNN"
+                "nypost.com" "New York Post"})
 
 (defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
