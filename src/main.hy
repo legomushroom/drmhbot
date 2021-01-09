@@ -32,10 +32,10 @@
     (setv child-element (.findChild headline))
     
     (unless (none? child-element)
-      (setv child-name (. child-element name))
+      (setv child-name (.lower (. child-element name)))
 
       (cond
-        [(and (= child-name "font") (= (get child-element "color") "red"))
+        [(and (= child-name "font") (= (.lower (get child-element "color")) "red"))
           (setv important? True)]
         [(= child-name "i")
           (setv italic? True)]))
