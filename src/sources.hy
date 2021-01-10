@@ -9,7 +9,9 @@
                 "www.cnbc.com" "CNBC"
                 "www.thedailybeast.com" "The Daily Beast"
                 "www.cnn.com" "CNN"
-                "nypost.com" "New York Post"})
+                "nypost.com" "New York Post"
+                "www.seattletimes.com" "The Seattle Times"
+                "www.bloomberg.com" "Bloomberg"})
 
 (defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
