@@ -115,6 +115,9 @@ six==1.15.0; python_version >= "2.7" and python_full_version < "3.0.0" or python
 soupsieve==2.0.1; python_version >= "3.5" \
     --hash=sha256:1634eea42ab371d3d346309b93df7870a88610f0725d47528be902a0d95ecc55 \
     --hash=sha256:a59dc181727e95d25f781f0eb4fd1825ff45590ec8ff49eadfd7f1a537cc0232
+tabulate==0.8.7 \
+    --hash=sha256:ac64cb76d53b1231d364babcd72abbb16855adac7de6665122f97b593f1eb2ba \
+    --hash=sha256:db2723a20d04bcda8522165c73eea7c300eda74e0ce852d9022e0159d7895007
 tornado==6.0.4; python_version >= "3.5" \
     --hash=sha256:5217e601700f24e966ddab689f90b7ea4bd91ff3357c3600fa1045e26d68e55d \
     --hash=sha256:c98232a3ac391f5faea6821b53db8db461157baa788f5d6222a193e9456e1740 \
