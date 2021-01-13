@@ -14,7 +14,9 @@
                 "www.bloomberg.com" "Bloomberg"
                 "www.the-sun.com" "The US Sun"
                 "www.mediaite.com" "Mediaite"
-                "www.politico.com" "Politico"})
+                "www.politico.com" "Politico"
+                "news.trust.org" "Thomson Reuters Foundation News"
+                "www.sfgate.com" "SFGATE"})
 
 (defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
