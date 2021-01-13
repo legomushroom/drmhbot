@@ -1,27 +1,33 @@
 (import argparse)
 
-(import [tabulate [tabulate]])
+(import psycopg2
+        [tabulate [tabulate]])
 
-(defn add-source [name hostname]
-  (print name hostname))
+(defn add-source [conn source-name hostname]
+  (print conn))
 
-(defn remove-source [hostname]
-  (print hostname))
+(defn remove-source [conn hostname]
+  (print conn))
 
-(defn list-sources []
-  (print (tabulate [["CBS News" "www.cbsnews.com"]]
-                   :headers ["Name" "Hostname"]
-                   :tablefmt "grid")))
+(defn list-sources [conn]
+  (with [conn]
+    (with [curs (conn.cursor)]
+      (curs.execute "SELECT name, hostname FROM sources ORDER BY name ASC")
+      (setv results (curs.fetchall))
+      (print (tabulate results :headers ["Name" "Hostname"]
+                               :tablefmt "grid")))))
 
 (defmain [&rest args]
   (setv parser (argparse.ArgumentParser :description "Edit the \"sources\" table.")
-        subparsers (parser.add-subparsers :help "the sub-command to run"
+        subparsers (parser.add-subparsers :help "the subcommand to run"
                                           :dest "subcommand"
                                           :required True)
 
         add-parser (subparsers.add-parser "add" :help "add a new source")
         remove-parser (subparsers.add-parser "remove" :help "remove a source")
         list-parser (subparsers.add-parser "list" :help "list sources"))
+  
+  (parser.add-argument "--database" :required True)
 
   (add-parser.add-argument "--name" :required True)
   (add-parser.add-argument "--hostname" :required True)
@@ -29,12 +35,17 @@
   (remove-parser.add-argument "--hostname" :required True)
 
   (setv args (parser.parse-args)
+        database-url (. args database)
         subcommand (. args subcommand))
+  
+  (setv conn (psycopg2.connect database-url))
 
-  (cond
-    [(= subcommand "add")
-      (add-source (. args name) (. args hostname))]
+  (with [conn]
+    (cond [(= subcommand "add")
+      (add-source conn (. args name) (. args hostname))]
     [(= subcommand "remove")
-      (remove-source (. args hostname))]
+      (remove-source conn (. args hostname))]
     [(= subcommand "list")
-      (list-sources)]))
+      (list-sources conn)]))
+
+  (conn.close))
