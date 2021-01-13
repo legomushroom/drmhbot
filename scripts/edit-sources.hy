@@ -3,11 +3,15 @@
 (import psycopg2
         [tabulate [tabulate]])
 
-(defn add-source [conn source-name hostname]
-  (print conn))
+(defn add-source [conn source-name host-name]
+  (with [conn]
+    (with [curs (conn.cursor)]
+      (curs.execute "INSERT INTO sources VALUES (%s, %s)" (, source-name host-name)))))
 
-(defn remove-source [conn hostname]
-  (print conn))
+(defn remove-source [conn host-name]
+  (with [conn]
+    (with [curs (conn.cursor)]
+      (curs.execute "DELETE FROM sources WHERE hostname = %s" (, host-name)))))
 
 (defn list-sources [conn]
   (with [conn]
