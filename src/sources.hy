@@ -22,5 +22,5 @@
   (conn.close)
   
   (if (not (none? result))
-    (, :named result)
+    (, :named (get result 0))
     (, :unnamed host-name)))
