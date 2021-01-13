@@ -16,7 +16,8 @@
       (print host-name)
       (curs.execute "SELECT name FROM sources WHERE hostname = %s" (, host-name))
 
-      (setv result (curs.fetchone))))
+      (setv result (curs.fetchone))
+      (print result (type result))))
   
   (conn.close)
   
