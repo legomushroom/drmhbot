@@ -13,11 +13,8 @@
   ; TODO: Find out if this is too slow.
   (with [conn]
     (with [curs (conn.cursor)]
-      (print host-name)
       (curs.execute "SELECT name FROM sources WHERE hostname = %s" (, host-name))
-
-      (setv result (curs.fetchone))
-      (print result (type result))))
+      (setv result (curs.fetchone))))
   
   (conn.close)
   
