@@ -7,7 +7,7 @@
   (setv host-name (. (parse-url url) netloc))
 
   (if (or (= host-name "www.twitter.com") (= host-name "twitter.com"))
-    (return (parse-twitter-url url)))
+    (return (, :unnamed (parse-twitter-url url))))
 
   (setv result "")
 
