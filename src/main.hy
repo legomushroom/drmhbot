@@ -6,6 +6,7 @@
 (import [bs4 [BeautifulSoup]]
         [telegram [Bot ParseMode]]
         [telegram.utils.helpers [escape-markdown]]
+        psycopg2
         redis
         requests)
 

@@ -1,8 +1,6 @@
 (import os
         [urllib.parse [urlparse :as parse-url]])
 
-(import psycopg2)
-
 (defn source-from-url [conn url]
   (setv host-name (. (parse-url url) netloc))
 
