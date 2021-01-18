@@ -11,7 +11,7 @@
     (setv host-name (. (parse-url (get-msn-source url)) netloc)))
   
   (if (= host-name "news.yahoo.com")
-    (setv host-name (. (parse-url (get-yahoo-source url)) netloc))))
+    (setv host-name (. (parse-url (get-yahoo-source url)) netloc)))
 
   (if (or (= host-name "www.twitter.com") (= host-name "twitter.com"))
     (return (, :unnamed (format-twitter-url url))))
