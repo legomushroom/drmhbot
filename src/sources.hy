@@ -1,11 +1,16 @@
-(import os
-        [urllib.parse [urlparse :as parse-url]])
+(import [urllib.parse [urlparse :as parse-url]])
+
+(import [bs4 [BeautifulSoup]]
+        requests)
 
 (defn source-from-url [conn url]
   (setv host-name (. (parse-url url) netloc))
 
+  (if (= host-name "www.msn.com")
+    (setv host-name (get-msn-source url)))
+
   (if (or (= host-name "www.twitter.com") (= host-name "twitter.com"))
-    (return (, :unnamed (parse-twitter-url url))))
+    (return (, :unnamed (format-twitter-url url))))
 
   (setv result "")
 
@@ -18,7 +23,14 @@
     (, :named (get result 0))
     (, :unnamed host-name)))
 
-(defn parse-twitter-url [url]
+(defn get-msn-source [url]
+  (setv html-doc (. (requests.get url) content)
+        soup (BeautifulSoup html-doc "html.parser")
+        canonical-href (get (soup.find "link" :rel "canonical") "href"))
+  
+  canonical-href)
+
+(defn format-twitter-url [url]
   (setv path (. (parse-url url) path)
         path-parts (.split path "/")
         username (get path-parts 1))
