@@ -7,7 +7,7 @@
   (setv host-name (. (parse-url url) netloc))
 
   (if (= host-name "www.msn.com")
-    (setv host-name (get-msn-source url)))
+    (setv host-name (. (parse-url (get-msn-source url)) netloc)))
 
   (if (or (= host-name "www.twitter.com") (= host-name "twitter.com"))
     (return (, :unnamed (format-twitter-url url))))
