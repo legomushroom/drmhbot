@@ -1,7 +1,6 @@
 (import argparse)
 
-(import psycopg2
-        [tabulate [tabulate]])
+(import psycopg2)
 
 (defn add-source [conn source-name host-name]
   (with [conn]
@@ -13,14 +12,6 @@
     (with [curs (conn.cursor)]
       (curs.execute "DELETE FROM sources WHERE hostname = %s" (, host-name)))))
 
-(defn list-sources [conn]
-  (with [conn]
-    (with [curs (conn.cursor)]
-      (curs.execute "SELECT name, hostname FROM sources ORDER BY name ASC")
-      (setv results (curs.fetchall))
-      (print (tabulate results :headers ["Name" "Hostname"]
-                               :tablefmt "grid")))))
-
 (defmain [&rest args]
   (setv parser (argparse.ArgumentParser :description "Edit the \"sources\" table.")
         subparsers (parser.add-subparsers :help "the subcommand to run"
@@ -28,8 +19,7 @@
                                           :required True)
 
         add-parser (subparsers.add-parser "add" :help "add a new source")
-        remove-parser (subparsers.add-parser "remove" :help "remove a source")
-        list-parser (subparsers.add-parser "list" :help "list sources"))
+        remove-parser (subparsers.add-parser "remove" :help "remove a source"))
   
   (parser.add-argument "--database" :required True)
 
@@ -48,8 +38,6 @@
     (cond [(= subcommand "add")
       (add-source conn (. args name) (. args hostname))]
     [(= subcommand "remove")
-      (remove-source conn (. args hostname))]
-    [(= subcommand "list")
-      (list-sources conn)]))
+      (remove-source conn (. args hostname))]))
 
   (conn.close))
