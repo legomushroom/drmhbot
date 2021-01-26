@@ -77,9 +77,9 @@ decorator==4.4.2; python_version >= "2.6" and python_full_version < "3.0.0" or p
     --hash=sha256:e3a62f0520172440ca0dcc823749319382e377f37f140a0b99ef45fecb84bfe7
 funcparserlib==0.3.6 \
     --hash=sha256:b7992eac1a3eb97b3d91faa342bfda0729e990bd8a43774c1592c091e563c91d
-hy==0.19.0 \
-    --hash=sha256:d2ed54995f05518c8038d06d916cb960e9e56050c4c4426cb11d0ed9650ab2e2 \
-    --hash=sha256:3a5a1d76ddeb2f1d5de71ad1b1167799850db955b5eb0258e351fb182b2e6016
+hy==0.20.0 \
+    --hash=sha256:f4c6cdf6ee04e6d94fd8b5c6e8389bd99df4c672d570b3eb847615a5f882047c \
+    --hash=sha256:1b72863754fb57e2dd275a9775bf621cb50a565e76733a2e74e9954e7fbb060e
 idna==2.10; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" \
     --hash=sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0 \
     --hash=sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6
