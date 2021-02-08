@@ -10,7 +10,7 @@
   (if (= host-name "www.msn.com")
     (setv host-name (. (parse-url (get-msn-source url)) netloc)))
   
-  (if (yahoo? host-name))
+  (if (yahoo? host-name)
     (setv host-name (. (parse-url (get-yahoo-source url)) netloc)))
 
   (if (or (= host-name "www.twitter.com") (= host-name "twitter.com"))
