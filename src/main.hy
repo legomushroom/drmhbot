@@ -17,7 +17,7 @@
 
 (setv logger (logging.getLogger __name__))
 
-(setv escape-v2 (partial escape-markdown :version 2))
+(setv escape-markdown-v2 (partial escape-markdown :version 2))
 
 (defn parse-headlines [html-doc]
   (defn parse-headline [conn headline]
@@ -35,11 +35,10 @@
     (unless (none? child-element)
       (setv child-name (.lower (. child-element name)))
 
-      (cond
-        [(and (= child-name "font") (= (.lower (get child-element "color")) "red"))
-          (setv important? True)]
-        [(= child-name "i")
-          (setv italic? True)]))
+      (cond [(and (= child-name "font") (= (.lower (get child-element "color")) "red"))
+              (setv important? True)]
+            [(= child-name "i")
+              (setv italic? True)]))
     
       {:title title
        :url url
@@ -82,22 +81,21 @@
 
 (defn build-message [headlines]
   (defn build-article [headline]
-    (setv title (escape-v2 (get headline :title))
-          url (escape-v2 (get headline :url) :entity-type "text_link")
+    (setv title (escape-markdown-v2 (get headline :title))
+          url (escape-markdown-v2 (get headline :url) :entity-type "text_link")
           source (get headline :source)
           important? (get headline :important?)
           italic? (get headline :italic?))
     
-    (setv article (cond
-      [important? f"[*{title}*]({url})"]
-      [italic? f"[_{title}_]({url})"]
-      [True f"[{title}]({url})"]))
+    (setv article (cond [important? f"[*{title}*]({url})"]
+                        [italic? f"[_{title}_]({url})"]
+                        [True f"[{title}]({url})"]))
     
     (setv [type name] source)
 
     (if (= type :named)
-      (setv escaped-name (escape-v2 name))
-      (setv escaped-name f"`{(escape-v2 name)}`"))
+      (setv escaped-name (escape-markdown-v2 name))
+      (setv escaped-name f"`{(escape-markdown-v2 name)}`"))
     
     f"{article} \({escaped-name}\)")
 
@@ -105,7 +103,7 @@
     (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
     (.join "\n" message)))
 
-(defmain [&rest args]
+(defmain []
   (setv token (get os.environ "TOKEN"))
   (setv bot (Bot token))
   
