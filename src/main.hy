@@ -104,13 +104,14 @@
     (.join "\n" message)))
 
 (defmain []
-  (setv token (get os.environ "TOKEN"))
+  (setv token (get os.environ "TOKEN")
+        chat-id (get os.environ "CHAT_ID"))
   (setv bot (Bot token))
   
   (setv message (build-message (get-latest-headlines)))
   
   (unless (none? message)
-    (bot.send-message :chat-id "@DrudgeReportHeadlines"
+    (bot.send-message :chat-id chat-id
                       :text message
                       :parse-mode ParseMode.MARKDOWN_V2
                       :disable-web-page-preview True)))

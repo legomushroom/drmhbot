@@ -1,0 +1,44 @@
+name: Test run
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  test_run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9.1"
+      - name: Install Poetry
+        run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+      - name: Add Poetry to PATH
+        run: echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+      - name: Install dependencies
+        run: python3 -m poetry install
+      - name: Run the bot
+        run: "timeout 30 hy src/main.hy" # Specify a timeout so we don't get stuck forever
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          CHAT_ID: "-1001498263454"
+          DATABASE_URL: postgres://user:pass@localhost:5432/db
+          REDIS_URL: redis://:pass@localhost:6379
+        services:
+          postgres:
+            image: postgres
+            env:
+              POSTGRES_USER: user
+              POSTGRES_PASSWORD: pass
+              POSTGRES_DB: db
+            ports:
+              - 5432:5432
+          redis:
+            image: redis
+            command: redis-server --requirepass $REDIS_PASSWORD
+            env:
+              REDIS_PASSWORD: pass
+            ports:
+              - 6379:6379
