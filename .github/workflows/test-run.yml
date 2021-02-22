@@ -28,7 +28,7 @@ jobs:
           PGPORT: "5432"
           PGDATABASE: db
       - name: Run the bot
-        run: "timeout 30 poetry run hy src/main.hy" # Specify a timeout so we don't get stuck forever
+        run: poetry run hy src/main.hy
         env:
           TOKEN: ${{ secrets.TOKEN }}
           CHAT_ID: "-1001498263454"
