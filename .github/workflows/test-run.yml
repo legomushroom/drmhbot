@@ -18,7 +18,7 @@ jobs:
       - name: Add Poetry to PATH
         run: echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
       - name: Install dependencies
-        run: python3 -m poetry install
+        run: poetry install
       - name: Run the bot
         run: "timeout 30 hy src/main.hy" # Specify a timeout so we don't get stuck forever
         env:
