@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run the bot
-        run: "timeout 30 hy src/main.hy" # Specify a timeout so we don't get stuck forever
+        run: "timeout 30 poetry run hy src/main.hy" # Specify a timeout so we don't get stuck forever
         env:
           TOKEN: ${{ secrets.TOKEN }}
           CHAT_ID: "-1001498263454"
