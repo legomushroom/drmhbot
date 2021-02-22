@@ -19,6 +19,14 @@ jobs:
         run: echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
       - name: Install dependencies
         run: poetry install
+      - name: Setup database
+        run: |
+          psql --host localhost \
+               --port 5432 \
+               --username user \
+               --password pass \
+               --dbname db \
+               --file setup.sql
       - name: Run the bot
         run: "timeout 30 poetry run hy src/main.hy" # Specify a timeout so we don't get stuck forever
         env:
