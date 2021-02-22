@@ -26,19 +26,19 @@ jobs:
           CHAT_ID: "-1001498263454"
           DATABASE_URL: postgres://user:pass@localhost:5432/db
           REDIS_URL: redis://:pass@localhost:6379
-        services:
-          postgres:
-            image: postgres
-            env:
-              POSTGRES_USER: user
-              POSTGRES_PASSWORD: pass
-              POSTGRES_DB: db
-            ports:
-              - 5432:5432
-          redis:
-            image: redis
-            command: redis-server --requirepass $REDIS_PASSWORD
-            env:
-              REDIS_PASSWORD: pass
-            ports:
-              - 6379:6379
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: pass
+          POSTGRES_DB: db
+        ports:
+          - 5432:5432
+      redis:
+        image: redis
+        command: redis-server --requirepass $REDIS_PASSWORD
+        env:
+          REDIS_PASSWORD: pass
+        ports:
+          - 6379:6379
