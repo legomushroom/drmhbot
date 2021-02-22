@@ -20,13 +20,13 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Setup database
-        run: |
-          psql --host localhost \
-               --port 5432 \
-               --username user \
-               --password pass \
-               --dbname db \
-               --file setup.sql
+        run: psql --file setup.sql
+        env:
+          PGUSER: user
+          PGPASSWORD: pass
+          PGHOST: localhost
+          PGPORT: "5432"
+          PGDATABASE: db
       - name: Run the bot
         run: "timeout 30 poetry run hy src/main.hy" # Specify a timeout so we don't get stuck forever
         env:
