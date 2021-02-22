@@ -45,7 +45,5 @@ jobs:
           - 5432:5432
       redis:
         image: redis
-        env:
-          REDIS_PASSWORD: pass
         ports:
           - 6379:6379
