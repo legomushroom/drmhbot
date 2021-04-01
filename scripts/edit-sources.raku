@@ -33,27 +33,29 @@ You can only remove a source by hostname.
 
 use DB::Pg;
 
-my constant $database-url = %*ENV<DATABASE_URL>
-    or die 'Please set the $DATABASE_URL environment variable (see docs).';
+my constant $database-url = %*ENV<DATABASE_URL>;
+my constant $error-message = 'Please set the $DATABASE_URL environment variable (see `raku --doc scripts/edit-sources.raku`).';
 
 #| Open the "List sources" dataclip in a browser.
 multi sub MAIN() {
     my constant $list-sources-url =
         "https://data.heroku.com/dataclips/imyepakolrfaqwkidvmznoyednwd";
 
+    # TODO: do this in a cross-platform way.
+
     run("open", $list-sources-url);
 }
 
 #| Add a new source.
 multi sub MAIN(Str :$name!, Str :$hostname!) {
-    my $conn = DB::Pg.new(conninfo => $database-url);
+    my $conn = DB::Pg.new(conninfo => ($database-url or die $error-message));
 
     $conn.query('INSERT INTO sources VALUES ($1, $2)', $name, $hostname);
 }
 
 #| Remove a source.
 multi sub MAIN(Str :$hostname!) {
-    my $conn = DB::Pg.new(conninfo => $database-url);
+    my $conn = DB::Pg.new(conninfo => ($database-url or die $error-message));
 
     $conn.query('DELETE FROM sources WHERE hostname = $1', $hostname);
 }
