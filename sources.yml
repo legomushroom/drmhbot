@@ -1,0 +1,153 @@
+- name: 10 Tampa Bay WTSP
+  domain: www.wtsp.com
+- name: ABC13
+  domain: abc13.com
+- name: ABC News
+  domain: abcnews.go.com
+- name: Accuweather
+  domain: www.accuweather.com
+- name: AFP
+  domain: www.afp.com
+- name: AP
+  domain: apnews.com
+- name: Axios
+  domain: www.axios.com
+- name: Axios
+  domain: axios.com
+- name: BBC
+  domain: www.bbc.com
+- name: Bloomberg
+  domain: www.bloomberg.com
+- name: CBNC
+  domain: www.cnbc.com
+- name: CBS Boston
+  domain: boston.cbslocal.com
+- name: CBS Dallas
+  domain: dfw.cbslocal.com
+- name: CBS Denver
+  domain: denver.cbslocal.com
+- name: CBS Miami
+  domain: miami.cbslocal.com
+- name: CBS News
+  domain: www.cbsnews.com
+- name: CBS New York
+  domain: newyork.cbslocal.com
+- name: CBS Sports
+  domain: www.cbssports.com
+- name: Chron
+  domain: www.chron.com
+- name: CNN
+  domain: www.cnn.com
+- name: CNS News
+  domain: www.cnsnews.com
+- name: C-SPAN
+  domain: www.c-span.org
+- name: Daily Express
+  domain: www.express.co.uk
+- name: Daily Mail
+  domain: www.dailymail.co.uk
+- name: Deadline
+  domain: deadline.com
+- name: Deccan Herald
+  domain: www.deccanherald.com
+- name: Deutsche Welle
+  domain: www.dw.com
+- name: DNYuz
+  domain: dnyuz.com
+- name: Entertainment Tonight
+  domain: www.etonline.com
+- name: ESPN
+  domain: www.espn.com
+- name: Forth Worth Star-Telegram
+  domain: www.star-telegram.com
+- name: FOX 5 New York
+  domain: www.fox5ny.com
+- name: Fox News
+  domain: www.foxnews.com
+- name: France 24
+  domain: www.france24.com
+- name: Gallup
+  domain: news.gallup.com
+- name: KTLA
+  domain: ktla.com
+- name: Los Angeles Times
+  domain: www.latimes.com
+- name: MarketWatch
+  domain: www.marketwatch.com
+- name: Mediaite
+  domain: www.mediaite.com
+- name: Medical Xpress
+  domain: medicalxpress.com
+- name: NBC News
+  domain: www.nbcnews.com
+- name: News-Times
+  domain: www.newstimes.com
+- name: New York Magazine
+  domain: nymag.com
+- name: New York Post
+  domain: nypost.com
+- name: New York Times
+  domain: www.nytimes.com
+- name: Observer
+  domain: observer.com
+- name: Pew Research Center
+  domain: www.pewresearch.org
+- name: Politico
+  domain: www.politico.com
+- name: Reason
+  domain: reason.com
+- name: Reuters
+  domains:
+    - news.trust.org
+    - www.reuters.com
+- name: SFGATE
+  domain: www.sfgate.com
+- name: Stamford Advocate
+  domain: www.stamfordadvocate.com
+- name: Sun Sentinel
+  domain: www.sun-sentinel.com
+- name: Tampa Bay Times
+  domain: www.tampabay.com
+- name: The Atlantic
+  domain: www.theatlantic.com
+- name: The Daily Beast
+  domain: www.thedailybeast.com
+- name: The Guardian
+  domain: www.theguardian.com
+- name: The Hill
+  domain: thehill.com
+- name: The Jerusalem Post
+  domain: www.jpost.com
+- name: The Scotsman
+  domain: www.scotsman.com
+- name: The Seattle Times
+  domain: www.seattletimes.com
+- name: The Sun
+  domains:
+    - www.the-sun.com
+    - www.the-sun.co.uk
+    - www.thesun.co.uk
+- name: The Washington Post
+  domain: www.washingtonpost.com
+- name: The Washington Times
+  domain: www.washingtontimes.com
+- name: The Weather Channel
+  domain: weather.com
+- name: TMZ
+  domain: www.tmz.com
+- name: Twitter image
+  domain: pbs.twimg.om
+- name: USA Today
+  domain: www.usatoday.com
+- name: VICE
+  domain: www.vice.com
+- name: Wall Street Journal
+  domain: www.wsj.com
+- name: Washington Examiner
+  domain: www.washingtonexaminer.com
+- name: Wenatchee World
+  domain: www.wenatcheeworld.com
+- name: Wright-Weather
+  domain: hp2.wright-weather.com
+- name: Yahoo! News
+  domain: news.yahoo.com
