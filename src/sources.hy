@@ -1,10 +1,26 @@
-(import json
+(import [functools [lru-cache]]
+        json
         [urllib.parse [urlparse :as parse-url]])
 
 (import [bs4 [BeautifulSoup]]
-        requests)
+        requests
+        yaml)
 
-(defn source-from-url [conn url]
+#@((lru-cache :maxsize 1)
+  (defn load-sources []
+    (with [f (open "sources.yml")]
+      (setv sources-yml (yaml.safe-load (.read f))
+            sources {})
+      
+      (for [source sources-yml]
+        (if (in "domain" source)
+          (assoc sources (get source "domain") (get source "name"))
+          (for [domain (get source "domains")]
+            (assoc sources domain (get source "name"))))))
+  
+    sources))
+
+(defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
 
   (if (= host-name "www.msn.com")
@@ -16,15 +32,10 @@
   (if (or (= host-name "www.twitter.com") (= host-name "twitter.com"))
     (return (, :unnamed (format-twitter-url url))))
 
-  (setv result "")
-
-  (with [conn]
-    (with [curs (conn.cursor)]
-      (curs.execute "SELECT name FROM sources WHERE hostname = %s" (, host-name))
-      (setv result (curs.fetchone))))
+  (setv name (.get (load-sources) host-name))
   
-  (if (not (none? result))
-    (, :named (get result 0))
+  (if (not (none? name))
+    (, :named name)
     (, :unnamed host-name)))
 
 (defn get-soup [url]

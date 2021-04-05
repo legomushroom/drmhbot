@@ -6,7 +6,6 @@
 (import [bs4 [BeautifulSoup]]
         [telegram [Bot ParseMode]]
         [telegram.utils.helpers [escape-markdown]]
-        psycopg2
         redis
         requests)
 
@@ -20,13 +19,13 @@
 (setv escape-markdown-v2 (partial escape-markdown :version 2))
 
 (defn parse-headlines [html-doc]
-  (defn parse-headline [conn headline]
+  (defn parse-headline [headline]
     (if (none? headline)
       (return))
 
     (setv title (.get-text headline)
           url (get headline "href")
-          source (sources.source-from-url conn url)
+          source (sources.source-from-url url)
           important? False
           italic? False)
 
@@ -50,14 +49,10 @@
         selector "body > tt > b > tt > b > center"
         headlines-element (soup.select-one selector))
   
-  (setv conn (psycopg2.connect (get os.environ "DATABASE_URL")))
-
   (setv parsed (list
     (filter (comp not none?)
-      (map (fn [headline] (parse-headline conn headline)) (headlines-element.select "a")))))
-  
-  (conn.close)
-  
+      (map (fn [headline] (parse-headline headline)) (headlines-element.select "a")))))
+
   parsed)
 
 (defn get-latest-headlines []
