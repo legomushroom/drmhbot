@@ -1,15 +1,15 @@
 - name: 10 Tampa Bay WTSP
   domain: www.wtsp.com
-- name: ABC13
-  domain: abc13.com
 - name: ABC News
   domain: abcnews.go.com
-- name: Accuweather
-  domain: www.accuweather.com
+- name: ABC13
+  domain: abc13.com
 - name: AFP
   domain: www.afp.com
 - name: AP
   domain: apnews.com
+- name: Accuweather
+  domain: www.accuweather.com
 - name: Axios
   domain: www.axios.com
 - name: Axios
@@ -18,6 +18,8 @@
   domain: www.bbc.com
 - name: Bloomberg
   domain: www.bloomberg.com
+- name: C-SPAN
+  domain: www.c-span.org
 - name: CBNC
   domain: www.cnbc.com
 - name: CBS Boston
@@ -28,20 +30,20 @@
   domain: denver.cbslocal.com
 - name: CBS Miami
   domain: miami.cbslocal.com
-- name: CBS News
-  domain: www.cbsnews.com
 - name: CBS New York
   domain: newyork.cbslocal.com
+- name: CBS News
+  domain: www.cbsnews.com
 - name: CBS Sports
   domain: www.cbssports.com
-- name: Chron
-  domain: www.chron.com
 - name: CNN
   domain: www.cnn.com
 - name: CNS News
   domain: www.cnsnews.com
-- name: C-SPAN
-  domain: www.c-span.org
+- name: Chron
+  domain: www.chron.com
+- name: DNYuz
+  domain: dnyuz.com
 - name: Daily Express
   domain: www.express.co.uk
 - name: Daily Mail
@@ -52,16 +54,14 @@
   domain: www.deccanherald.com
 - name: Deutsche Welle
   domain: www.dw.com
-- name: DNYuz
-  domain: dnyuz.com
-- name: Entertainment Tonight
-  domain: www.etonline.com
 - name: ESPN
   domain: www.espn.com
-- name: Forth Worth Star-Telegram
-  domain: www.star-telegram.com
+- name: Entertainment Tonight
+  domain: www.etonline.com
 - name: FOX 5 New York
   domain: www.fox5ny.com
+- name: Forth Worth Star-Telegram
+  domain: www.star-telegram.com
 - name: Fox News
   domain: www.foxnews.com
 - name: France 24
@@ -80,14 +80,14 @@
   domain: medicalxpress.com
 - name: NBC News
   domain: www.nbcnews.com
-- name: News-Times
-  domain: www.newstimes.com
 - name: New York Magazine
   domain: nymag.com
 - name: New York Post
   domain: nypost.com
 - name: New York Times
   domain: www.nytimes.com
+- name: News-Times
+  domain: www.newstimes.com
 - name: Observer
   domain: observer.com
 - name: Pew Research Center
@@ -106,6 +106,8 @@
   domain: www.stamfordadvocate.com
 - name: Sun Sentinel
   domain: www.sun-sentinel.com
+- name: TMZ
+  domain: www.tmz.com
 - name: Tampa Bay Times
   domain: www.tampabay.com
 - name: The Atlantic
@@ -133,8 +135,6 @@
   domain: www.washingtontimes.com
 - name: The Weather Channel
   domain: weather.com
-- name: TMZ
-  domain: www.tmz.com
 - name: Twitter image
   domain: pbs.twimg.om
 - name: USA Today
