@@ -32,6 +32,8 @@
   domain: miami.cbslocal.com
 - name: CBS New York
   domain: newyork.cbslocal.com
+- name: CBS Minnesota
+  domain: minnesota.cbslocal.com
 - name: CBS News
   domain: www.cbsnews.com
 - name: CBS Sports
@@ -153,3 +155,11 @@
   domain: hp2.wright-weather.com
 - name: Yahoo! News
   domain: news.yahoo.com
+- name: Times of Israel
+  domain: www.timesofisrael.com
+- name: Indianapolis Star
+  domain: www.indystar.com
+- name: The Wrap
+  domain: www.thewrap.com
+- name: Dallas Morning News
+  domain: www.dallasnews.com
