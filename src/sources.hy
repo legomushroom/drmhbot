@@ -12,7 +12,7 @@
       (setv parsed-sources (yaml.safe-load (.read f))
             sources {})
       
-      (for [[domain, name] (.items parsed-sources)]
+      (for [[domain name] (.items parsed-sources)]
         (assoc sources domain name)))
   
     sources))
