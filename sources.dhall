@@ -91,6 +91,7 @@ in  toDomainMap
       , source "Indianapolis Star" "www.indystar.com"
       , source "The Wrap" "www.thewrap.com"
       , source "Dallas Morning News" "www.dallasnews.com"
+      , source "South China Morning Post" "www.scmp.com"
       , multiSource "Reuters" [ "news.trust.org", "www.reuters.com" ]
       , multiSource
           "The Sun"
