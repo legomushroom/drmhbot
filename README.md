@@ -1,4 +1,4 @@
-# drmhbot
+# drmhbot [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/heyajulia/drmhbot)
 
 This is the source code for that powers [@DrudgeReportHeadlinesBot][bot]. It
 posts the "main" [Drudge Report][drudge] headlines to the
