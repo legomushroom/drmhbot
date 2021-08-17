@@ -90,7 +90,7 @@
 
     (if (= type :named)
       (setv escaped-name (escape-markdown-v2 name))
-      (setv escaped-name f"`{(escape-markdown-v2 name)}`"))
+      (setv escaped-name f"`{(escape-markdown-v2 name)}` #unnamed"))
     
     f"{article} \({escaped-name}\)")
 
