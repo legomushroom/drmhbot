@@ -9,14 +9,11 @@
 #@((lru-cache :maxsize 1)
   (defn load-sources []
     (with [f (open "sources.yml")]
-      (setv sources-yml (yaml.safe-load (.read f))
+      (setv parsed-sources (yaml.safe-load (.read f))
             sources {})
       
-      (for [source sources-yml]
-        (if (in "domain" source)
-          (assoc sources (get source "domain") (get source "name"))
-          (for [domain (get source "domains")]
-            (assoc sources domain (get source "name"))))))
+      (for [[domain, name] (.items parsed-sources)]
+        (assoc sources domain name)))
   
     sources))
 
