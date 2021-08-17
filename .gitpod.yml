@@ -1,0 +1,5 @@
+image:
+  file: Dockerfile.gitpod
+tasks:
+  - before: export PIP_USER=false
+    init: poetry install
