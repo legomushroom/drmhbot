@@ -3,13 +3,13 @@ let Domains = ./Domains.dhall
 let toDomainMap = ./toDomainMap.dhall
 
 let source =
-      \(name : Text) ->
-      \(domain : Text) ->
+      λ(name : Text) →
+      λ(domain : Text) →
         { name, domains = Domains.Single domain }
 
 let multiSource =
-      \(name : Text) ->
-      \(domains : List Text) ->
+      λ(name : Text) →
+      λ(domains : List Text) →
         { name, domains = Domains.Multiple domains }
 
 in  toDomainMap
