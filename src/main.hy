@@ -90,7 +90,7 @@
     
     (if (= type :named)
       f"{article} \({(escape-markdown-v2 name)}\)"
-      f"{article} \(`{(escape-markdown-v2 name)}`\) #unnamed")))
+      f"{article} \(`{(escape-markdown-v2 name)}`\) #unnamed"))
 
   (unless (none? headlines)
     (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
