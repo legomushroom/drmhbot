@@ -87,12 +87,10 @@
                         [True f"[{title}]({url})"]))
     
     (setv [type name] source)
-
-    (if (= type :named)
-      (setv escaped-name (escape-markdown-v2 name))
-      (setv escaped-name f"`{(escape-markdown-v2 name)}` \#unnamed"))
     
-    f"{article} \({escaped-name}\)")
+    (if (= type :named)
+      f"{article} \({(escape-markdown-v2 name)}\)"
+      f"{article} \(`{(escape-markdown-v2 name)}`\) #unnamed")))
 
   (unless (none? headlines)
     (setv message (map (fn [headline] f"\\- {(build-article headline)}") headlines))
