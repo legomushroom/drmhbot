@@ -3,3 +3,6 @@ image:
 tasks:
   - before: export PIP_USER=false
     init: poetry install
+github:
+  prebuilds:
+    addComment: true
