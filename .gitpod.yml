@@ -1,6 +1,9 @@
 image:
   file: Dockerfile.gitpod
 tasks:
+  - command: |
+      export CHAT_ID="-1001498263454"
+      export REDIS_URL="redis://:@localhost:6379"
   - before: export PIP_USER=false
     init: poetry install
   - command: redis-server
