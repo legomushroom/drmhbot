@@ -1,12 +1,8 @@
 image:
   file: Dockerfile.gitpod
 tasks:
-  - env:
-      CHAT_ID: "-1001498263454"
-      REDIS_URL: "redis://:@localhost:6379"
-  - command: poetry install
-    env:
-      PIP_USER: "false"
+  - before: export PIP_USER=false
+    init: poetry install
   - command: redis-server
 github:
   prebuilds:
