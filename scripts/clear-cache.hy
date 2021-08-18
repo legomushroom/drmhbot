@@ -1,3 +1,5 @@
+#!/usr/bin/env hy
+
 (import os)
 
 (import redis)
