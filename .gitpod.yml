@@ -7,3 +7,6 @@ tasks:
 github:
   prebuilds:
     addComment: true
+ports:
+  - port: 6379
+    onOpen: ignore
