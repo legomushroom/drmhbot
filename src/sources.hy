@@ -3,13 +3,12 @@
         [urllib.parse [urlparse :as parse-url]])
 
 (import [bs4 [BeautifulSoup]]
-        requests
-        yaml)
+        requests)
 
 #@((lru-cache :maxsize 1)
   (defn load-sources []
-    (with [f (open "sources.yml")]
-      (setv parsed-sources (yaml.safe-load (.read f))
+    (with [f (open "sources.json")]
+      (setv parsed-sources (.loads json (.read f))
             sources {})
       
       (for [[domain name] (.items parsed-sources)]
