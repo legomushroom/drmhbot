@@ -3,6 +3,7 @@ image:
 tasks:
   - before: export PIP_USER=false
     init: poetry install
+  - command: redis-server
 github:
   prebuilds:
     addComment: true

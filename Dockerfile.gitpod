@@ -4,7 +4,8 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/inst
     wget -q https://github.com/dhall-lang/dhall-haskell/releases/download/1.39.0/dhall-json-1.7.7-x86_64-linux.tar.bz2 https://github.com/dhall-lang/dhall-haskell/releases/download/1.39.0/dhall-lsp-server-1.0.15-x86_64-linux.tar.bz2 && \
     sudo tar xf dhall-json-1.7.7-x86_64-linux.tar.bz2 -C /usr/local && \
     sudo tar xf dhall-lsp-server-1.0.15-x86_64-linux.tar.bz2 -C /usr/local && \
-    rm dhall-json-1.7.7-x86_64-linux.tar.bz2 dhall-lsp-server-1.0.15-x86_64-linux.tar.bz2
+    rm dhall-json-1.7.7-x86_64-linux.tar.bz2 dhall-lsp-server-1.0.15-x86_64-linux.tar.bz2 && \
+    brew install redis
 
 # Add Poetry to PATH.
 ENV PATH="${HOME}/.local/bin:${PATH}"
