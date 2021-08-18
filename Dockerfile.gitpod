@@ -1,5 +1,6 @@
 FROM gitpod/workspace-full
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python3 -
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python3 - && \
+    brew install dhall-lsp-server dhall-json
 
 ENV PATH="${HOME}/.local/bin:${PATH}"
