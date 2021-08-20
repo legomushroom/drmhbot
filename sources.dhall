@@ -92,6 +92,8 @@ in  toDomainMap
       , source "The Wrap" "www.thewrap.com"
       , source "Dallas Morning News" "www.dallasnews.com"
       , source "South China Morning Post" "www.scmp.com"
+      , source "McClatchy DC" "www.mcclatchydc.com"
+      , source "The Charlotte Observer" "www.charlotteobserver.com"
       , multiSource "Reuters" [ "news.trust.org", "www.reuters.com" ]
       , multiSource
           "The Sun"
