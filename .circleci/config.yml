@@ -11,8 +11,8 @@ jobs:
       - run:
           name: Check if sources.dhall is newer than sources.json
           command: |
-            if [ "source.dhall" -nt "source.json" ]; then
-              echo "source.dhall is newer than source.json! Did you forget to run regenerate_sources.sh?"
+            if [ "sources.dhall" -nt "sources.json" ]; then
+              echo "sources.dhall is newer than sources.json! Did you forget to run regenerate_sources.sh?"
               exit 1
             fi
       - run:
