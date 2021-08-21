@@ -94,6 +94,9 @@ in  toDomainMap
       , source "South China Morning Post" "www.scmp.com"
       , source "McClatchy DC" "www.mcclatchydc.com"
       , source "The Charlotte Observer" "www.charlotteobserver.com"
+      , source "Electrek" "electrek.co"
+      , source "Daily Star" "www.dailystar.co.uk"
+      , source "TechCrunch" "techcrunch.com"
       , multiSource "Reuters" [ "news.trust.org", "www.reuters.com" ]
       , multiSource
           "The Sun"
