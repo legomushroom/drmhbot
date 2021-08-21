@@ -97,6 +97,7 @@ in  toDomainMap
       , source "Electrek" "electrek.co"
       , source "Daily Star" "www.dailystar.co.uk"
       , source "TechCrunch" "techcrunch.com"
+      , source "The Fake Source" "www.fakesource.test"
       , multiSource "Reuters" [ "news.trust.org", "www.reuters.com" ]
       , multiSource
           "The Sun"
