@@ -17,7 +17,6 @@ in  toDomainMap
       , source "ABC News" "abcnews.go.com"
       , source "ABC13" "abc13.com"
       , source "AFP" "www.afp.com"
-      , source "AP" "apnews.com"
       , source "Accuweather" "www.accuweather.com"
       , source "Axios" "www.axios.com"
       , source "Axios" "axios.com"
@@ -97,7 +96,19 @@ in  toDomainMap
       , source "Electrek" "electrek.co"
       , source "Daily Star" "www.dailystar.co.uk"
       , source "TechCrunch" "techcrunch.com"
-      , source "The Fake Source" "www.fakesource.test"
+      , source "The Mirror" "www.mirror.co.uk"
+      , source "Sputnik News" "sputniknews.com"
+      , source "National Review" "www.nationalreview.com"
+      , source "The Times" "www.thetimes.co.uk"
+      , source
+          "National Hurricane Center and Central Pacific Hurricane Center"
+          "www.nhc.noaa.gov"
+      , source "YouTube" "www.youtube.com"
+      , source "The Times-Picayune | New Orleans Advocate" "www.nola.com"
+      , source "Audacy" "www.audacy.com"
+      , source "U.S. News" "www.usnews.com"
+      , source "Military Advantage" "www.military.com"
+      , multiSource "AP" [ "apnews.com", "www.ap.org" ]
       , multiSource "Reuters" [ "news.trust.org", "www.reuters.com" ]
       , multiSource
           "The Sun"
