@@ -36,8 +36,5 @@ let fn =
           }
           source.domains
 
-let toDomainMap =
-      λ(sources : List Source) →
-        flatten (List/map Source (List (Entry Text Text)) fn sources)
-
-in  toDomainMap
+in  λ(sources : List Source) →
+      flatten (List/map Source (List (Entry Text Text)) fn sources)
