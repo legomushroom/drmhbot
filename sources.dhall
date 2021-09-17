@@ -108,6 +108,13 @@ in  toDomainMap
       , source "Audacy" "www.audacy.com"
       , source "U.S. News" "www.usnews.com"
       , source "Military Advantage" "www.military.com"
+      , source "ABC7 New York" "abc7ny.com"
+      , source "The Week" "theweek.com"
+      , source "Bloomberg Law" "news.bloomberglaw.com"
+      , source "New York Daily News" "www.nydailynews.com"
+      , source "Business Insider" "www.businessinsider.com"
+      , source "Americans for Tax Reform" "www.atr.org"
+      , source "The World" "www.pri.org"
       , multiSource "AP" [ "apnews.com", "www.ap.org" ]
       , multiSource "Reuters" [ "news.trust.org", "www.reuters.com" ]
       , multiSource
