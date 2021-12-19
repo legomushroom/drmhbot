@@ -1,0 +1,11 @@
+{
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "bot",
+  "workspaceFolder": "/workspace",
+  "extensions": [
+    "dhall.dhall-lang",
+    "dhall.vscode-dhall-lsp-server",
+    "tshakaericlekholoane.hy"
+  ],
+  "postAttachCommand": "poetry install"
+}
