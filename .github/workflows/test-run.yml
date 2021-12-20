@@ -16,9 +16,7 @@ jobs:
         with:
           python-version: "3.9"
       - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python3 -
-      - name: Add Poetry to PATH
-        run: echo "PATH=$HOME/.local/bin:$PATH" >> $GITHUB_ENV
+        run: pipx install poetry
       - name: Install dependencies
         run: poetry install
       - name: Run the bot
