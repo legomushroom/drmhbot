@@ -17,6 +17,9 @@ jobs:
           python-version: "3.9"
       - name: Install Poetry
         run: pipx install poetry
+      - name: Determine Poetry virtualenv path
+        run: |
+          echo "POETRY_VIRTUALENV_PATH=$(poetry config virtualenvs.path)" >> $GITHUB_ENV
       - name: Install dependencies
         run: poetry install
       - name: Run the bot
@@ -25,6 +28,11 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
           CHAT_ID: "-1001498263454"
           REDIS_URL: redis://:@localhost:6379
+      - name: Cache dependencies
+        uses: actions/cache@v2.1.7
+        with:
+          path: ${{ env.POETRY_VIRTUALENV_PATH }}
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
     services:
       redis:
         image: redis
