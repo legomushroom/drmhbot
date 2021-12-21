@@ -18,6 +18,15 @@
 
 (setv escape-markdown-v2 (partial escape-markdown :version 2))
 
+(defn get-redis-client []
+  (if (in "REDIS_TLS_URL" os.environ)
+    (do
+      (logger.info "Using a secure Redis connection because REDIS_TLS_URL is set")
+      (redis.from_url (get os.environ "REDIS_TLS_URL") :ssl True :ssl_cert_reqs None))
+    (do
+      (logger.warning "Not using a secure Redis connection because REDIS_TLS_URL is not set")
+      (redis.from_url (get os.environ "REDIS_URL")))))
+
 (defn parse-headlines [html-doc]
   (defn parse-headline [headline]
     (if (none? headline)
@@ -60,7 +69,7 @@
         headlines (parse-headlines html-doc))
   
   (setv latest-headlines-key "latest-headlines"
-        redis-client (redis.from-url (get os.environ "REDIS_URL"))
+        redis-client (get-redis-client)
         old-headlines (redis-client.get latest-headlines-key))
   
   (if (none? old-headlines)
