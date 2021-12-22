@@ -1,4 +1,5 @@
 (import [functools [partial]]
+        [urllib.parse [urlparse :as parse-url]]
         logging
         os
         pickle)
@@ -22,7 +23,13 @@
   (if (in "REDIS_TLS_URL" os.environ)
     (do
       (logger.info "Using a secure Redis connection because REDIS_TLS_URL is set")
-      (redis.from_url (get os.environ "REDIS_TLS_URL") :ssl True :ssl_cert_reqs None))
+
+      (setv connection-string (parse-url (get os.environ "REDIS_TLS_URL")))
+      (redis.Redis :host (. connection-string hostname)
+                   :port (. connection-string port)
+                   :password (. connection-string password)
+                   :ssl True
+                   :ssl_cert_reqs None))
     (do
       (logger.warning "Not using a secure Redis connection because REDIS_TLS_URL is not set")
       (redis.from_url (get os.environ "REDIS_URL")))))
