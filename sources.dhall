@@ -78,7 +78,7 @@ in  toDomainMap
       , source "The Washington Post" "www.washingtonpost.com"
       , source "The Washington Times" "www.washingtontimes.com"
       , source "The Weather Channel" "weather.com"
-      , source "Twitter image" "pbs.twimg.om"
+      , source "Twitter image" "pbs.twimg.com"
       , source "USA Today" "www.usatoday.com"
       , source "VICE" "www.vice.com"
       , source "Wall Street Journal" "www.wsj.com"
