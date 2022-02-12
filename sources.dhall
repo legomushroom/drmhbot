@@ -1,16 +1,10 @@
-let Domains = ./Domains.dhall
-
 let toDomainMap = ./toDomainMap.dhall
 
-let source =
-      λ(name : Text) →
-      λ(domain : Text) →
-        { name, domains = Domains.Single domain }
+let source = toDomainMap.source
 
-let multiSource =
-      λ(name : Text) →
-      λ(domains : List Text) →
-        { name, domains = Domains.Multiple domains }
+let multiSource = toDomainMap.multiSource
+
+let toDomainMap = toDomainMap.toDomainMap
 
 in  toDomainMap
       [ source "10 Tampa Bay WTSP" "www.wtsp.com"
