@@ -7,7 +7,7 @@ license = "Proprietary"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = "^2.26.0"
+requests = "^2.27.1"
 beautifulsoup4 = "^4.10.0"
 python-telegram-bot = "^13.10"
 redis = "^4.1.0"
