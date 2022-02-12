@@ -2,6 +2,7 @@ language: python
 python:
   - "3.9"
 before_install:
+  - deactivate
   - pip install poetry
 install:
   - poetry install
@@ -11,5 +12,5 @@ env:
   - CHAT_ID="-1001498263454" REDIS_URL="redis://:@localhost:6379"
 cache:
   directories:
-    - /home/travis/.cache/pypoetry/virtualenvs
+    - $HOME/.cache/pypoetry/virtualenvs
 services: redis-server
