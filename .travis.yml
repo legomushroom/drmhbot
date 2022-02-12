@@ -2,7 +2,6 @@ language: python
 python:
   - "3.9"
 before_install:
-  - deactivate
   - pip install poetry
 install:
   - poetry install
@@ -10,7 +9,4 @@ script:
   - poetry run hy src/main.hy
 env:
   - CHAT_ID="-1001498263454" REDIS_URL="redis://:@localhost:6379"
-cache:
-  directories:
-    - $HOME/.cache/pypoetry/virtualenvs
 services: redis-server
