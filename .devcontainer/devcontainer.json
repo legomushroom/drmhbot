@@ -5,6 +5,9 @@
   "extensions": [
     "dhall.dhall-lang",
     "dhall.vscode-dhall-lsp-server",
+    "esbenp.prettier-vscode",
+    "GitHub.copilot",
+    "ms-azuretools.vscode-docker",
     "tshakaericlekholoane.hy"
   ],
   "postAttachCommand": "poetry install"
