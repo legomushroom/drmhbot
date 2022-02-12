@@ -1,4 +1,5 @@
 {
+  "terminal.integrated.fontSize": 15,
   "[hy]": {
     "editor.rulers": [
       {
