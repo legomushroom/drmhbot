@@ -186,7 +186,7 @@ python-versions = "*"
 
 [[package]]
 name = "redis"
-version = "4.1.3"
+version = "4.1.4"
 description = "Python client for Redis database and key-value store"
 category = "main"
 optional = false
@@ -288,7 +288,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "70e3707e7719892f75acc3f3e5d01740763ba2c3d634d5f6c7168659f8e429df"
+content-hash = "8365e1fccbcb22cf8246282f1a7be9e438e8398df266b36e61457301a71c277c"
 
 [metadata.files]
 appdirs = [
@@ -356,8 +356,8 @@ pytz = [
     {file = "pytz-2020.5.tar.gz", hash = "sha256:180befebb1927b16f6b57101720075a984c019ac16b1b7575673bea42c6c3da5"},
 ]
 redis = [
-    {file = "redis-4.1.3-py3-none-any.whl", hash = "sha256:267e89e476eb684517584e8988f1e5d755f483a368c133020c4c40e8b676bc5d"},
-    {file = "redis-4.1.3.tar.gz", hash = "sha256:f2715caad9f0e8c6ff8df46d3c4c9022a3929001f530f66b62747554d3067068"},
+    {file = "redis-4.1.4-py3-none-any.whl", hash = "sha256:04629f8e42be942c4f7d1812f2094568f04c612865ad19ad3ace3005da70631a"},
+    {file = "redis-4.1.4.tar.gz", hash = "sha256:1d9a0cdf89fdd93f84261733e24f55a7bbd413a9b219fdaf56e3e728ca9a2306"},
 ]
 requests = [
     {file = "requests-2.27.1-py2.py3-none-any.whl", hash = "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"},
