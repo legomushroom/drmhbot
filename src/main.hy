@@ -67,7 +67,7 @@
   
   (setv parsed (list
     (filter (comp not none?)
-      (map (fn [headline] (parse-headline headline)) (headlines-element.select "a")))))
+      (map parse-headline (.select headlines-element "a")))))
 
   parsed)
 

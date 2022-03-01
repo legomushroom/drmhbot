@@ -22,7 +22,7 @@
   (if (= host-name "www.msn.com")
     (setv host-name (. (parse-url (get-msn-source url)) netloc)))
   
-  (if (yahoo? host-name)
+  (if (in ".yahoo.com" host-name)
     (setv host-name (. (parse-url (get-yahoo-source url)) netloc)))
 
   (if (or (= host-name "www.twitter.com") (= host-name "twitter.com"))
@@ -44,9 +44,6 @@
         canonical-href (get (soup.find "link" :rel "canonical") "href"))
   
   canonical-href)
-
-(defn yahoo? [host-name]
-  (in ".yahoo.com" host-name))
 
 (defn get-yahoo-source [url]
   (setv soup (get-soup url)
