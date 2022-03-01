@@ -125,12 +125,21 @@ in  toDomainMap
       , source "WFAA" "www.wfaa.com"
       , source "Chicago Tribune" "www.chicagotribune.com"
       , source "The Bakersfield Californian" "www.bakersfield.com"
-      , source "NPR" "www.npr.org"
+      , source "NPR" "www.npr.ojrg"
       , source "Orlando Sentinel" "www.orlandosentinel.com"
       , source "ABC7 Bay Area" "abc7news.com"
       , source "Mint" "www.livemint.com"
       , source "WTVR" "www.wtvr.com"
       , source "Click2Houston" "www.click2houston.com"
+      , source "ArcaMax" "www.arcamax.com"
+      , source "Markets Insider" "markets.businessinsider.com"
+      , source "MarketBeat" "www.marketbeat.com"
+      , source "The Moscow Times" "www.themoscowtimes.com"
+      , source "USNI News" "news.usni.org"
+      , source "OilPrice" "www.oilprice.com"
+      , source "Gulf News" "www.gulfnews.com"
+      , source "Metro News" "mero.co.uk"
+      , source "Roll Call" "rollcall.com"
       , multiSource "AP" [ "apnews.com", "www.ap.org" ]
       , multiSource "Reuters" [ "news.trust.org", "www.reuters.com" ]
       , multiSource
