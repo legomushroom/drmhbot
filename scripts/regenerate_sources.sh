@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-dhall-to-json < sources.dhall > sources.json
+./scripts/regenerate_sources.py < sources.json | sponge sources.json
