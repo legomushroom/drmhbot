@@ -13,10 +13,9 @@
       (for [[name domains] (.items parsed-sources)]
         (if (isinstance domains str)
           (assoc sources domains name)
-          (do
-            (for [domain domains]
-              (assoc sources domain name)))))
-      sources)))
+          (for [domain domains]
+            (assoc sources domain name)))))
+      sources))
 
 (defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
