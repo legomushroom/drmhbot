@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+
+import argparse
+import copy
+import functools
+import json 
+import os
+import os.path
+import sys
+
+pretty_dump = functools.partial(json.dump, indent=2, sort_keys=True)
+
+
+def tidy(sources):
+    s = copy.deepcopy(sources)
+
+    for source in s:
+        domains = s[source]
+
+        if isinstance(domains, list):
+            if len(domains) == 1:
+                s[source] = domains[0]
+            else:
+                domains.sort()
+
+    return s
+
+
+def main():
+    DEFAULT_SOURCES_PATH = os.path.join(os.getcwd(), "sources.json")
+
+    parser = argparse.ArgumentParser(description="Tidy up the sources.")
+    parser.add_argument(
+        "-f",
+        "--file",
+        help="The file to tidy up",
+        default=DEFAULT_SOURCES_PATH,
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="The output file (- for stdout)",
+        default=DEFAULT_SOURCES_PATH,
+    )
+    parser.add_argument(
+        "-c", "--check", help="Check if the input file is tidy", action="store_true"
+    )
+
+    args = parser.parse_args()
+
+    sources = None
+    with open(args.file) as f:
+        sources = json.load(f)
+
+    tidied_sources = tidy(sources)
+
+    if args.check:
+        sys.exit(0 if tidied_sources == sources else 1)
+
+    if args.output == "-":
+        pretty_dump(tidied_sources, sys.stdout)
+        sys.stdout.write("\n")
+    else:
+        with open(args.output, "w+") as outfile:
+            pretty_dump(tidied_sources, outfile)
+            outfile.write("\n")
+
+
+if __name__ == "__main__":
+    main()

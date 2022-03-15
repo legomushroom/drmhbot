@@ -8,13 +8,15 @@
 #@((lru-cache :maxsize 1)
   (defn load-sources []
     (with [f (open "sources.json")]
-      (setv parsed-sources (.loads json (.read f))
+      (setv parsed-sources (.load json f)
             sources {})
-      
-      (for [[domain name] (.items parsed-sources)]
-        (assoc sources domain name)))
-  
-    sources))
+      (for [[name domains] (.items parsed-sources)]
+        (if (isinstance domains str)
+          (assoc sources domains name)
+          (do
+            (for [domain domains]
+              (assoc sources domain name)))))
+      sources)))
 
 (defn source-from-url [url]
   (setv host-name (. (parse-url url) netloc))
