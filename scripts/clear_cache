@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+import os
+
+import redis
+
+
+def main():
+    with redis.from_url(os.environ["REDIS_URL"]) as r:
+        r.delete("latest-headlines")
+
+
+if __name__ == "__main__":
+    main()
