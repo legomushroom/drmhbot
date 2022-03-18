@@ -6,7 +6,7 @@ before_install:
 install:
   - poetry install
 script:
-  - poetry run hy src/main.hy
+  - poetry run hy src/main.py
 env:
   - CHAT_ID="-1001498263454" REDIS_URL="redis://:@localhost:6379"
 services: redis-server
