@@ -1,21 +1,41 @@
+import functools
 import json
 import logging
 import os
 import time
+from dataclasses import dataclass
+from typing import Optional
 from urllib.parse import urlparse as parse_url
 
 import redis
 import requests
 import rich.traceback
+from bs4 import BeautifulSoup
 from rich.logging import RichHandler
-from telegram import Bot
+from telegram import Bot, ParseMode
+from telegram.utils.helpers import escape_markdown as original_escape_markdown
+
+escape_markdown = functools.partial(original_escape_markdown, version=2)
+
+
+@dataclass
+class Headline:
+    text: str
+    url: Optional[str]
+
+
+@dataclass
+class Source:
+    name: Optional[str]
+    domain: str
 
 
 class DrudgeBot:
     def __init__(self, token: str, chat_id: str) -> None:
         logging.basicConfig(
-            format="%(asctime)s - %(message)s",
+            format="%(asctime)s.%(msecs)03d - %(message)s",
             level=logging.INFO,
+            datefmt="%Y-%m-%d %H:%M:%S",
             handlers=[RichHandler()],
         )
 
@@ -57,12 +77,6 @@ class DrudgeBot:
             self._sources = {}
 
             for name, domains in sources.items():
-                if name == "$schema":
-                    # This isn't a source. We don't need to skip it, or
-                    # do anything else with it, really, but it lets us report
-                    # an accurate count later on.
-                    continue
-
                 if isinstance(domains, list):
                     for domain in domains:
                         self._logger.debug("%r -> %r", domain, name)
@@ -73,17 +87,84 @@ class DrudgeBot:
 
                     self._sources[domains] = name
 
-        self._logger.info("%d sources loaded", len(self._sources))
+        # Minus one because we don't want to include the "$schema" key
+        # in the count
+        self._logger.info("%d sources loaded", len(self._sources) - 1)
 
     def send_message(self) -> None:
+        message = self._build_message(self._get_headlines())
+        self._logger.info("Message: %r", message)
+
+        # TODO: Don't send a message if nothing has changed.
+
+        self._bot.send_message(
+            chat_id=self._chat_id,
+            text=message,
+            parse_mode=ParseMode.MARKDOWN_V2,
+            disable_web_page_preview=True,
+        )
+
         self._logger.info("Sending message")
 
-        self._bot.send_message(chat_id=self._chat_id, text="Hello World!")
+    def _get_headlines(self) -> list[Headline]:
+        self._logger.info("Getting headlines")
 
-    def close(self) -> None:
-        # We use a 'close' method rather than a context manager—which would
-        # clearly be the more Pythonic choice—because the latter doesn't play
-        # nicely with the rich exception handler.
+        homepage = self._sess.get("https://www.drudgereport.com/")
+        soup = BeautifulSoup(homepage.content, "html.parser")
+
+        headline_els = soup.select("tt > b > tt > b > center a")
+        headlines = []
+
+        for el in headline_els:
+            text = el.text
+            url = el["href"]
+
+            headline = Headline(text, url)
+
+            self._logger.debug("Adding %r to headlines", headline)
+
+            headlines.append(headline)
+
+            # TODO: Handle italic, bold and italic-bold (bold-italic?) headlines
+
+        return headlines
+
+    def _get_source(self, url: str) -> Source:
+        self._logger.debug("Getting source for %r", url)
+
+        # TODO: Handle "special" sources (Twitter, Yahoo!, MSN)
+
+        domain = parse_url(url).netloc
+        name = self._sources.get(domain)
+
+        return Source(name, domain)
+
+    def _build_message(self, headlines: list[Headline]) -> str:
+        self._logger.info("Building message")
+
+        articles = []
+
+        for headline in headlines:
+            if headline.url is None:
+                articles.append(f"- {headline.text}")
+            else:
+                source = self._get_source(headline.url)
+
+                text = f"\- [{escape_markdown(headline.text)}]({escape_markdown(headline.url, entity_type='text_link')})"
+
+                if source.name is not None:
+                    text += f" \({escape_markdown(source.name)}\)"
+
+                articles.append(text)
+
+        self._logger.debug("Message before joining: %r", articles)
+
+        return "\n".join(articles)
+
+    def cleanup(self) -> None:
+        # We use a 'cleanup' method rather than a context manager because the latter
+        # doesn't play nicely with the rich exception handler.
+
         self._logger.info("Cleaning up requests session")
         self._sess.close()
 
@@ -97,7 +178,7 @@ def main():
     bot = DrudgeBot(os.environ["TOKEN"], os.environ["CHAT_ID"])
 
     bot.send_message()
-    bot.close()
+    bot.cleanup()
 
 
 if __name__ == "__main__":
