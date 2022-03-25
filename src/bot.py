@@ -5,6 +5,7 @@ import os
 import time
 from dataclasses import dataclass
 from typing import Optional
+from urllib.parse import ParseResult
 from urllib.parse import urlparse as parse_url
 
 import redis
@@ -87,8 +88,7 @@ class DrudgeBot:
 
                     self._sources[domains] = name
 
-        # Minus one because we don't want to include the "$schema" key
-        # in the count
+        # Minus one because we don't want to include the "$schema" key in the count
         self._logger.info("%d sources loaded", len(self._sources) - 1)
 
     def send_message(self) -> None:
@@ -103,8 +103,6 @@ class DrudgeBot:
             parse_mode=ParseMode.MARKDOWN_V2,
             disable_web_page_preview=True,
         )
-
-        self._logger.info("Sending message")
 
     def _get_headlines(self) -> list[Headline]:
         self._logger.info("Getting headlines")
@@ -125,19 +123,61 @@ class DrudgeBot:
 
             headlines.append(headline)
 
-            # TODO: Handle italic, bold and italic-bold (bold-italic?) headlines
+            # TODO: Handle italic, important and italic-important (important-italic?)
+            # headlines
 
         return headlines
 
     def _get_source(self, url: str) -> Source:
         self._logger.debug("Getting source for %r", url)
 
-        # TODO: Handle "special" sources (Twitter, Yahoo!, MSN)
+        parsed_url = parse_url(url)
+        domain = parsed_url.netloc
 
-        domain = parse_url(url).netloc
+        if ".twitter.com" in domain:
+            return self.get_twitter_source(parsed_url)
+
+        if ".yahoo.com" in domain:
+            source = self._get_yahoo_source(url)
+
+            return self._get_source(source)
+
+        if ".msn.com" in domain:
+            source = self._get_msn_source(url)
+
+            return self._get_source(source)
+
         name = self._sources.get(domain)
 
         return Source(name, domain)
+
+    def _get_twitter_source(self, url: ParseResult) -> Source:
+        self._logger.debug("Getting Twitter source for %r", url)
+
+        parts = url.path.split("/")
+
+        self._logger.debug("Twitter path parts: %r", parts)
+
+        return Source(parts[1], "twitter.com")
+
+    def _get_soup(self, url: str) -> BeautifulSoup:
+        self._logger.debug("Getting soup for %r", url)
+
+        response = self._sess.get(url)
+
+        return BeautifulSoup(response.content, "html.parser")
+
+    def _get_yahoo_source(self, url: str) -> str:
+        soup = self._get_soup(url)
+        meta = json.loads(soup.find("script", type="application/ld+json").text)
+
+        return meta["provider"]["url"]
+
+    def _get_msn_source(self, url: str) -> str:
+        soup = self._get_soup(url)
+        canonical_href = soup.find("link", rel="canonical")["href"]
+
+        return canonical_href
 
     def _build_message(self, headlines: list[Headline]) -> str:
         self._logger.info("Building message")
@@ -154,6 +194,11 @@ class DrudgeBot:
 
                 if source.name is not None:
                     text += f" \({escape_markdown(source.name)}\)"
+                else:
+                    if source.domain == "twitter.com":
+                        text += f" \(`@{escape_markdown(source.name)}`\)"
+                    else:
+                        text += f" \(`{escape_markdown(source.domain)}`\) #unnamed"
 
                 articles.append(text)
 
