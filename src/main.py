@@ -96,7 +96,12 @@ class DrudgeBot:
     def _get_previous_message(self) -> str:
         self._logger.info("Getting previous message")
 
-        return self._redis.get(DrudgeBot._PREVIOUS_MESSAGE_KEY).decode()
+        if (previous_message := self._redis.get(self._PREVIOUS_MESSAGE_KEY)) is None:
+            self._logger.info("No previous message")
+
+            return None
+
+        return previous_message
 
     def _store_message(self, message: str) -> None:
         self._logger.info("Storing message")
