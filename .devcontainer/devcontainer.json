@@ -6,23 +6,15 @@
     "esbenp.prettier-vscode",
     "GitHub.copilot",
     "ms-azuretools.vscode-docker",
+    "ms-python.python",
     "tshakaericlekholoane.hy"
   ],
   "postAttachCommand": "poetry install",
   "settings": {
     "terminal.integrated.fontSize": 15,
-    "[hy]": {
-      "editor.rulers": [
-        {
-          "column": 72,
-          "color": "#ffff00"
-        },
-        {
-          "column": 99,
-          "color": "#ff0000"
-        }
-      ],
-      "editor.tabSize": 2
-    }
+    "[python]": {
+      "editor.rulers": [88]
+    },
+    "python.formatting.provider": "black"
   }
 }
