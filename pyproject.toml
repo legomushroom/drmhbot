@@ -11,9 +11,6 @@ requests = "^2.27.1"
 beautifulsoup4 = "^4.10.0"
 python-telegram-bot = "^13.11"
 redis = "^4.1.4"
-hy = "^0.20.0"
-# Work-around for "error in funcparserlib setup command: use_2to3 is invalid"
-funcparserlib = "1.0.0a0"
 rich = "^12.0.0"
 
 [tool.poetry.dev-dependencies]

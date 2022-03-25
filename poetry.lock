@@ -1,12 +1,4 @@
 [[package]]
-name = "appdirs"
-version = "1.4.4"
-description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "apscheduler"
 version = "3.6.3"
 description = "In-process task scheduler with Cron-like capabilities"
@@ -31,14 +23,6 @@ testing = ["pytest", "pytest-cov", "pytest-tornado5", "mock", "pytest-asyncio (<
 tornado = ["tornado (>=4.3)"]
 twisted = ["twisted"]
 zookeeper = ["kazoo"]
-
-[[package]]
-name = "astor"
-version = "0.8.1"
-description = "Read/rewrite/write Python ASTs"
-category = "main"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
 
 [[package]]
 name = "beautifulsoup4"
@@ -119,7 +103,7 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 name = "colorama"
 version = "0.4.4"
 description = "Cross-platform colored terminal text."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
@@ -147,28 +131,6 @@ wrapt = ">=1.10,<2"
 
 [package.extras]
 dev = ["tox", "bump2version (<1)", "sphinx (<2)", "importlib-metadata (<3)", "importlib-resources (<4)", "configparser (<5)", "sphinxcontrib-websupport (<2)", "zipp (<2)", "PyTest (<5)", "PyTest-Cov (<2.6)", "pytest", "pytest-cov"]
-
-[[package]]
-name = "funcparserlib"
-version = "1.0.0a0"
-description = "Recursive descent parsing library based on functional combinators"
-category = "main"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
-
-[[package]]
-name = "hy"
-version = "0.20.0"
-description = "Lisp and Python love each other."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-astor = ">=0.8"
-colorama = "*"
-funcparserlib = ">=0.3.6"
-rply = ">=0.7.7"
 
 [[package]]
 name = "idna"
@@ -328,17 +290,6 @@ pygments = ">=2.6.0,<3.0.0"
 jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
 
 [[package]]
-name = "rply"
-version = "0.7.7"
-description = "A pure Python Lex/Yacc that works with RPython"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-appdirs = "*"
-
-[[package]]
 name = "six"
 version = "1.15.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -413,20 +364,12 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "a2e868126539cb6b9aeb857f7c16add8e646b10d37d7f5549ce4fc3c04b14b71"
+content-hash = "b6a733bdb5d18d86ab3299dd34a99992423364e144df68de7b06a626c87b508c"
 
 [metadata.files]
-appdirs = [
-    {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
-    {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
-]
 apscheduler = [
     {file = "APScheduler-3.6.3-py2.py3-none-any.whl", hash = "sha256:e8b1ecdb4c7cb2818913f766d5898183c7cb8936680710a4d3a966e02262e526"},
     {file = "APScheduler-3.6.3.tar.gz", hash = "sha256:3bb5229eed6fbbdafc13ce962712ae66e175aa214c69bed35a06bffcf0c5e244"},
-]
-astor = [
-    {file = "astor-0.8.1-py2.py3-none-any.whl", hash = "sha256:070a54e890cefb5b3739d19f30f5a5ec840ffc9c50ffa7d23cc9fc1a38ebbfc5"},
-    {file = "astor-0.8.1.tar.gz", hash = "sha256:6a6effda93f4e1ce9f618779b2dd1d9d84f1e32812c23a29b3fff6fd7f63fa5e"},
 ]
 beautifulsoup4 = [
     {file = "beautifulsoup4-4.10.0-py3-none-any.whl", hash = "sha256:9a315ce70049920ea4572a4055bc4bd700c940521d36fc858205ad4fcde149bf"},
@@ -485,14 +428,6 @@ deprecated = [
     {file = "Deprecated-1.2.13-py2.py3-none-any.whl", hash = "sha256:64756e3e14c8c5eea9795d93c524551432a0be75629f8f29e67ab8caf076c76d"},
     {file = "Deprecated-1.2.13.tar.gz", hash = "sha256:43ac5335da90c31c24ba028af536a91d41d53f9e6901ddb021bcc572ce44e38d"},
 ]
-funcparserlib = [
-    {file = "funcparserlib-1.0.0a0-py2.py3-none-any.whl", hash = "sha256:a5ca025aaec28ae19956556260f5e0f28b0d851863e7982a0daf238161e33752"},
-    {file = "funcparserlib-1.0.0a0.tar.gz", hash = "sha256:e6fb432a9276078eee71813a59089fd8c4f3e81f183b4ce8b8b4734d0b2faa2a"},
-]
-hy = [
-    {file = "hy-0.20.0-py2.py3-none-any.whl", hash = "sha256:f4c6cdf6ee04e6d94fd8b5c6e8389bd99df4c672d570b3eb847615a5f882047c"},
-    {file = "hy-0.20.0.tar.gz", hash = "sha256:1b72863754fb57e2dd275a9775bf621cb50a565e76733a2e74e9954e7fbb060e"},
-]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
     {file = "idna-2.10.tar.gz", hash = "sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"},
@@ -544,10 +479,6 @@ requests = [
 rich = [
     {file = "rich-12.0.0-py3-none-any.whl", hash = "sha256:fdcd2f8d416e152bcf35c659987038d1ae5a7bd336e821ca7551858a4c7e38a9"},
     {file = "rich-12.0.0.tar.gz", hash = "sha256:14bfd0507edc633e021b02c45cbf7ca22e33b513817627b8de3412f047a3e798"},
-]
-rply = [
-    {file = "rply-0.7.7-py2.py3-none-any.whl", hash = "sha256:2c8083bf2853642a0e24de9a9db3ce2d25b3153037a7298d2ff9434413744e33"},
-    {file = "rply-0.7.7.tar.gz", hash = "sha256:4d6d25703efd28fb3d5707f7b3bd4fe66c306159a5c25af10ba26d206a66d00d"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},

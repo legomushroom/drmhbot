@@ -1,154 +1,247 @@
+import functools
+import json
 import logging
 import os
-import pickle
-from functools import partial
-from typing import Any, Optional
+import time
+from dataclasses import dataclass
+from typing import Optional
+from urllib.parse import ParseResult
 from urllib.parse import urlparse as parse_url
 
 import redis
 import requests
-from bs4 import BeautifulSoup, Tag
-from hy import HyKeyword
-from hy.core.language import comp, is_none
-from hy.core.shadow import hyx_not
+import rich.traceback
+from bs4 import BeautifulSoup
+from rich.logging import RichHandler
 from telegram import Bot, ParseMode
-from telegram.utils.helpers import escape_markdown
+from telegram.utils.helpers import escape_markdown as original_escape_markdown
 
-import sources
-
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
-)
-logger = logging.getLogger(__name__)
-escape_markdown_v2 = partial(escape_markdown, version=2)
+escape_markdown = functools.partial(original_escape_markdown, version=2)
 
 
-def get_redis_client() -> redis.Redis:
-    if "REDIS_TLS_URL" in os.environ:
-        logger.info("Using a secure Redis connection because REDIS_TLS_URL is set")
-        connection_string = parse_url(os.environ["REDIS_TLS_URL"])
+@dataclass
+class Headline:
+    text: str
+    url: Optional[str]
 
-        return redis.Redis(
-            host=connection_string.hostname,
-            port=connection_string.port,
-            password=connection_string.password,
-            ssl=True,
-            ssl_cert_reqs=None,
+
+@dataclass
+class Source:
+    name: Optional[str]
+    domain: str
+
+
+class DrudgeBot:
+    _PREVIOUS_MESSAGE_KEY = "latest-headlines"
+
+    def __init__(self, token: str, chat_id: str) -> None:
+        logging.basicConfig(
+            format="%(asctime)s.%(msecs)03d - %(message)s",
+            level=logging.INFO,
+            datefmt="%Y-%m-%d %H:%M:%S",
+            handlers=[RichHandler()],
         )
 
-    logger.warning(
-        "Not using a secure Redis connection because REDIS_TLS_URL is not set"
-    )
+        logging.Formatter.converter = time.gmtime
 
-    return redis.from_url(os.environ["REDIS_URL"])
+        self._logger = logging.getLogger("DrudgeBot")
 
+        self._logger.info("Starting")
 
-def parse_headlines(html_doc: bytes):
-    def parse_headline(headline: Optional[Tag]) -> Optional[dict[HyKeyword, Any]]:
-        if is_none(headline):
-            return None
+        self._logger.info("Initializing bot")
+        self._bot = Bot(token)
 
-        title = headline.get_text()
-        url = headline["href"]
-        source = sources.source_from_url(url)
-        is_important = False
-        is_italic = False
-        child_element = headline.findChild()
+        self._chat_id = chat_id
 
-        if not is_none(child_element):
-            child_name = child_element.name.lower()
+        self._logger.info("Initializing requests session")
+        self._sess = requests.Session()
 
-            if child_name == "font" and child_element["color"].lower() == "red":
-                is_important = True
-            else:
-                if child_name == "i":
-                    is_italic = True
+        if "REDIS_TLS_URL" in os.environ:
+            self._logger.info("Using a secure Redis connection")
 
-        return {
-            HyKeyword("title"): title,
-            HyKeyword("url"): url,
-            HyKeyword("source"): source,
-            HyKeyword("important?"): is_important,
-            HyKeyword("italic?"): is_italic,
-        }
+            connection_string = parse_url(os.environ["REDIS_TLS_URL"])
 
-    soup = BeautifulSoup(html_doc, "html.parser")
-    selector = "body > tt > b > tt > b > center"
-    headlines_element = soup.select_one(selector)
-    parsed = list(
-        filter(
-            comp(hyx_not, is_none), map(parse_headline, headlines_element.select("a"))
-        )
-    )
+            self._redis = redis.Redis(
+                host=connection_string.hostname,
+                port=connection_string.port,
+                password=connection_string.password,
+                ssl=True,
+                ssl_cert_reqs=None,
+            )
+        else:
+            self._logger.warning("Not using a secure Redis connection")
 
-    return parsed
+            self._redis = redis.from_url(os.environ["REDIS_URL"])
 
+        self._logger.info("Loading sources")
 
-def get_latest_headlines() -> Optional[list[dict[HyKeyword, Any]]]:
-    html_doc = requests.get("https://drudgereport.com").content
-    headlines = parse_headlines(html_doc)
-    latest_headlines_key = "latest-headlines"
-    redis_client = get_redis_client()
-    old_headlines = redis_client.get(latest_headlines_key)
+        with open("sources.json") as f:
+            sources = json.load(f)
+            self._sources = {}
 
-    if is_none(old_headlines):
-        redis_client.set(latest_headlines_key, "")
-    else:
-        old_headlines = pickle.loads(old_headlines)
+            for name, domains in sources.items():
+                if isinstance(domains, list):
+                    for domain in domains:
+                        self._logger.debug("%r -> %r", domain, name)
 
-    if old_headlines == headlines:
-        return None
+                        self._sources[domain] = name
+                else:
+                    self._logger.debug("%r -> %r", domains, name)
 
-    redis_client.set(latest_headlines_key, pickle.dumps(headlines))
+                    self._sources[domains] = name
 
-    return headlines
+        # Minus one because we don't want to include the "$schema" key in the count
+        self._logger.info("%d sources loaded", len(self._sources) - 1)
 
+    def _get_previous_message(self) -> str:
+        self._logger.info("Getting previous message")
 
-def build_message(headlines: Optional[list[dict[HyKeyword, Any]]]) -> Optional[str]:
-    def build_article(headline: dict[HyKeyword, Any]) -> str:
-        title = escape_markdown_v2(headline[HyKeyword("title")])
-        url = escape_markdown_v2(headline[HyKeyword("url")], entity_type="text_link")
-        source = headline[HyKeyword("source")]
-        is_important = headline[HyKeyword("important?")]
-        is_italic = headline[HyKeyword("italic?")]
-        article = (
-            f"[*{title}*]({url})"
-            if is_important
-            else f"[_{title}_]({url})"
-            if is_italic
-            else f"[{title}]({url})"
-            if True
-            else None
-        )
+        return self._redis.get(DrudgeBot._PREVIOUS_MESSAGE_KEY).decode()
 
-        (type, name) = source
+    def _store_message(self, message: str) -> None:
+        self._logger.info("Storing message")
 
-        return (
-            f"{article} \\({escape_markdown_v2(name)}\\)"
-            if type == HyKeyword("named")
-            else f"{article} \\(`{escape_markdown_v2(name)}`\\) \\#unnamed"
-        )
+        self._redis.set(DrudgeBot._PREVIOUS_MESSAGE_KEY, message)
 
-    if not is_none(headlines):
-        message = map(lambda headline: f"\\- {build_article(headline)}", headlines)
-        return "\n".join(message)
+    def send_message(self) -> None:
+        previous_message = self._get_previous_message()
+        message = self._build_message(self._get_headlines())
 
-    return None
+        if message == previous_message:
+            self._logger.info("No change, not sending message")
+            return
 
+        self._logger.info("Message: %r", message)
 
-def main() -> None:
-    token = os.environ["TOKEN"]
-    chat_id = os.environ["CHAT_ID"]
-    bot = Bot(token)
-    message = build_message(get_latest_headlines())
-
-    if not is_none(message):
-        bot.send_message(
-            chat_id=chat_id,
+        self._bot.send_message(
+            chat_id=self._chat_id,
             text=message,
             parse_mode=ParseMode.MARKDOWN_V2,
             disable_web_page_preview=True,
         )
+
+        self._store_message(message)
+
+    def _get_headlines(self) -> list[Headline]:
+        self._logger.info("Getting headlines")
+
+        homepage = self._sess.get("https://www.drudgereport.com/")
+        soup = BeautifulSoup(homepage.content, "html.parser")
+
+        headline_els = soup.select("tt > b > tt > b > center a")
+        headlines = []
+
+        for el in headline_els:
+            text = el.text
+            url = el["href"]
+
+            headline = Headline(text, url)
+
+            self._logger.debug("Adding %r to headlines", headline)
+
+            headlines.append(headline)
+
+            # TODO: Handle italic, important and italic-important (important-italic?)
+            # headlines
+
+        return headlines
+
+    def _get_source(self, url: str) -> Source:
+        self._logger.debug("Getting source for %r", url)
+
+        parsed_url = parse_url(url)
+        domain = parsed_url.netloc
+
+        if ".twitter.com" in domain:
+            return self._get_twitter_source(parsed_url)
+
+        if ".yahoo.com" in domain:
+            source = self._get_yahoo_source(url)
+
+            return self._get_source(source)
+
+        if ".msn.com" in domain:
+            source = self._get_msn_source(url)
+
+            return self._get_source(source)
+
+        name = self._sources.get(domain)
+
+        return Source(name, domain)
+
+    def _get_twitter_source(self, url: ParseResult) -> Source:
+        self._logger.debug("Getting Twitter source for %r", url)
+
+        parts = url.path.split("/")
+
+        self._logger.debug("Twitter path parts: %r", parts)
+
+        return Source(parts[1], "twitter.com")
+
+    def _get_soup(self, url: str) -> BeautifulSoup:
+        self._logger.debug("Getting soup for %r", url)
+
+        response = self._sess.get(url)
+
+        return BeautifulSoup(response.content, "html.parser")
+
+    def _get_yahoo_source(self, url: str) -> str:
+        soup = self._get_soup(url)
+        meta = json.loads(soup.find("script", type="application/ld+json").text)
+
+        return meta["provider"]["url"]
+
+    def _get_msn_source(self, url: str) -> str:
+        soup = self._get_soup(url)
+        canonical_href = soup.find("link", rel="canonical")["href"]
+
+        return canonical_href
+
+    def _build_message(self, headlines: list[Headline]) -> str:
+        self._logger.info("Building message")
+
+        articles = []
+
+        for headline in headlines:
+            if headline.url is None:
+                articles.append(f"- {headline.text}")
+            else:
+                source = self._get_source(headline.url)
+
+                text = f"\- [{escape_markdown(headline.text)}]({escape_markdown(headline.url, entity_type='text_link')})"
+
+                if source.name is not None:
+                    text += f" \({escape_markdown(source.name)}\)"
+                else:
+                    if source.domain == "twitter.com":
+                        text += f" \(`@{escape_markdown(source.name)}`\)"
+                    else:
+                        text += f" \(`{escape_markdown(source.domain)}`\) \#unnamed"
+
+                articles.append(text)
+
+        self._logger.debug("Message before joining: %r", articles)
+
+        return "\n".join(articles)
+
+    def cleanup(self) -> None:
+        # We use a 'cleanup' method rather than a context manager because the latter
+        # doesn't play nicely with the rich exception handler.
+
+        self._logger.info("Cleaning up requests session")
+        self._sess.close()
+
+        self._logger.info("Cleaning up Redis connection")
+        self._redis.close()
+
+
+def main():
+    rich.traceback.install()
+
+    bot = DrudgeBot(os.environ["TOKEN"], os.environ["CHAT_ID"])
+
+    bot.send_message()
+    bot.cleanup()
 
 
 if __name__ == "__main__":
