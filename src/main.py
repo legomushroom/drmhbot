@@ -36,7 +36,7 @@ class DrudgeBot:
 
     def __init__(self, token: str, chat_id: str) -> None:
         logging.basicConfig(
-            format="%(asctime)s.%(msecs)03d - %(message)s",
+            format="%(message)s",
             level=logging.INFO,
             datefmt="%Y-%m-%d %H:%M:%S",
             handlers=[RichHandler()],
