@@ -32,6 +32,8 @@ class Source:
 
 
 class DrudgeBot:
+    _PREVIOUS_MESSAGE_KEY = "latest-headlines"
+
     def __init__(self, token: str, chat_id: str) -> None:
         logging.basicConfig(
             format="%(asctime)s.%(msecs)03d - %(message)s",
@@ -91,11 +93,25 @@ class DrudgeBot:
         # Minus one because we don't want to include the "$schema" key in the count
         self._logger.info("%d sources loaded", len(self._sources) - 1)
 
-    def send_message(self) -> None:
-        message = self._build_message(self._get_headlines())
-        self._logger.info("Message: %r", message)
+    def _get_previous_message(self) -> str:
+        self._logger.info("Getting previous message")
 
-        # TODO: Don't send a message if nothing has changed.
+        return self._redis.get(DrudgeBot._PREVIOUS_MESSAGE_KEY).decode()
+
+    def _store_message(self, message: str) -> None:
+        self._logger.info("Storing message")
+
+        self._redis.set(DrudgeBot._PREVIOUS_MESSAGE_KEY, message)
+
+    def send_message(self) -> None:
+        previous_message = self._get_previous_message()
+        message = self._build_message(self._get_headlines())
+
+        if message == previous_message:
+            self._logger.info("No change, not sending message")
+            return
+
+        self._logger.info("Message: %r", message)
 
         self._bot.send_message(
             chat_id=self._chat_id,
@@ -103,6 +119,8 @@ class DrudgeBot:
             parse_mode=ParseMode.MARKDOWN_V2,
             disable_web_page_preview=True,
         )
+
+        self._store_message(message)
 
     def _get_headlines(self) -> list[Headline]:
         self._logger.info("Getting headlines")
@@ -198,7 +216,7 @@ class DrudgeBot:
                     if source.domain == "twitter.com":
                         text += f" \(`@{escape_markdown(source.name)}`\)"
                     else:
-                        text += f" \(`{escape_markdown(source.domain)}`\) #unnamed"
+                        text += f" \(`{escape_markdown(source.domain)}`\) \#unnamed"
 
                 articles.append(text)
 
