@@ -135,7 +135,7 @@ class DrudgeBot:
         domain = parsed_url.netloc
 
         if ".twitter.com" in domain:
-            return self.get_twitter_source(parsed_url)
+            return self._get_twitter_source(parsed_url)
 
         if ".yahoo.com" in domain:
             source = self._get_yahoo_source(url)
