@@ -93,7 +93,7 @@ class DrudgeBot:
         # Minus one because we don't want to include the "$schema" key in the count
         self._logger.info("%d sources loaded", len(self._sources) - 1)
 
-    def _get_previous_message(self) -> str:
+    def _get_previous_message(self) -> Optional[str]:
         self._logger.info("Getting previous message")
 
         if (previous_message := self._redis.get(self._PREVIOUS_MESSAGE_KEY)) is None:
@@ -101,7 +101,7 @@ class DrudgeBot:
 
             return None
 
-        return previous_message
+        return previous_message.decode()
 
     def _store_message(self, message: str) -> None:
         self._logger.info("Storing message")
@@ -112,7 +112,7 @@ class DrudgeBot:
         previous_message = self._get_previous_message()
         message = self._build_message(self._get_headlines())
 
-        if previous_message is not None and message == previous_message:
+        if message == previous_message:
             self._logger.info("No change, not sending message")
             return
 
