@@ -112,7 +112,7 @@ class DrudgeBot:
         previous_message = self._get_previous_message()
         message = self._build_message(self._get_headlines())
 
-        if message == previous_message:
+        if previous_message is not None and message == previous_message:
             self._logger.info("No change, not sending message")
             return
 
