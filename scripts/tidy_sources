@@ -3,7 +3,7 @@
 import argparse
 import copy
 import functools
-import json 
+import json
 import os
 import os.path
 import sys
