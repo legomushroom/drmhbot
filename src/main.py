@@ -223,6 +223,10 @@ class DrudgeBot:
                     else:
                         text += f" \(`{escape_markdown(source.domain)}`\) \#unnamed"
 
+                        # TODO: Handle unnamed sources in a less obtrusive way.
+                        # Send a private message to the bot owner with the URL
+                        # and the title of the article.
+
                 articles.append(text)
 
         self._logger.debug("Message before joining: %r", articles)
