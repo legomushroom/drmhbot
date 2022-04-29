@@ -6,5 +6,5 @@ RUN apt-get update && \
 
 USER vscode
 
-# Based on a Gist by @jthorniley: https://git.io/JD93B
+# Based on a Gist by @jthorniley: https://gist.github.com/jthorniley/fba81c62a9d45c723777c7205ff96481
 RUN curl -sSL https://install.python-poetry.org | python3 -

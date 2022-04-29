@@ -5,7 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file: .env
-    # From microsoft/vscode-remote-release#2524: https://git.io/JD9mC
+    # From a comment by @chrmarti on microsoft/vscode-remote-release#2524:
+    # https://github.com/microsoft/vscode-remote-release/issues/2524#issuecomment-627759728
     command: /bin/sh -c "while sleep 1000; do :; done"
     expose:
       - 6379
