@@ -10,7 +10,7 @@ python = "^3.8"
 requests = "^2.27.1"
 beautifulsoup4 = "^4.11.1"
 python-telegram-bot = "^13.11"
-redis = "^4.2.2"
+redis = "^4.3.0"
 rich = "^12.4.1"
 
 [tool.poetry.dev-dependencies]
