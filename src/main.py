@@ -209,11 +209,11 @@ class DrudgeBot:
 
         for headline in headlines:
             if headline.url is None:
-                articles.append(f"- {headline.text}")
+                articles.append(f"- {headline.text.strip()}")
             else:
                 source = self._get_source(headline.url)
 
-                text = f"\- [{escape_markdown(headline.text)}]({escape_markdown(headline.url, entity_type='text_link')})"
+                text = f"\- [{escape_markdown(headline.text.strip())}]({escape_markdown(headline.url, entity_type='text_link')})"
 
                 if source.name is not None:
                     text += f" \({escape_markdown(source.name)}\)"
