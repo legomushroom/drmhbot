@@ -1,3 +1,4 @@
+name: Prebuild devcontainer
 on:
   push:
     paths:
