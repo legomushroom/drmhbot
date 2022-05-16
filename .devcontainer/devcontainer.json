@@ -2,13 +2,7 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "bot",
   "workspaceFolder": "/workspace",
-  "extensions": [
-    "esbenp.prettier-vscode",
-    "GitHub.copilot",
-    "ms-azuretools.vscode-docker",
-    "ms-python.python",
-    "tshakaericlekholoane.hy"
-  ],
+  "extensions": ["esbenp.prettier-vscode", "GitHub.copilot", "ms-azuretools.vscode-docker", "ms-python.python"],
   "postAttachCommand": "poetry install",
   "settings": {
     "terminal.integrated.fontSize": 15,
