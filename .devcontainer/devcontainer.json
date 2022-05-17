@@ -5,7 +5,6 @@
   "extensions": ["esbenp.prettier-vscode", "GitHub.copilot", "ms-azuretools.vscode-docker", "ms-python.python"],
   "postAttachCommand": "poetry install",
   "settings": {
-    "terminal.integrated.fontSize": 15,
     "[python]": {
       "editor.rulers": [88]
     },
