@@ -6,20 +6,12 @@
   "ABC7 Bay Area": "abc7news.com",
   "ABC7 New York": "abc7ny.com",
   "AFP": "www.afp.com",
-  "AP": [
-    "apnews.com",
-    "www.ap.org"
-  ],
   "Accuweather": "www.accuweather.com",
   "Alton Telegraph": "www.thetelegraph.com",
   "Americans for Tax Reform": "www.atr.org",
   "ArcaMax": "www.arcamax.com",
   "Audacy": "www.audacy.com",
   "Australian Broadcasting Corporation": "www.abc.net.au",
-  "Axios": [
-    "axios.com",
-    "www.axios.com"
-  ],
   "BBC": "www.bbc.com",
   "Barron's": "www.barrons.com",
   "Bloomberg": "www.bloomberg.com",
@@ -105,10 +97,6 @@
   "RadarOnline": "radaronline.com",
   "Real Clear Politics": "www.realclearpolitics.com",
   "Reason": "reason.com",
-  "Reuters": [
-    "news.trust.org",
-    "www.reuters.com"
-  ],
   "Richmond Times-Dispatch": "richmond.com",
   "Roll Call": "rollcall.com",
   "SFGATE": "www.sfgate.com",
@@ -139,11 +127,6 @@
   "The Sacramento Bee": "www.sacbee.com",
   "The Scotsman": "www.scotsman.com",
   "The Seattle Times": "www.seattletimes.com",
-  "The Sun": [
-    "www.the-sun.co.uk",
-    "www.the-sun.com",
-    "www.thesun.co.uk"
-  ],
   "The Sydney Morning Herald": "www.smh.com.au",
   "The Times": "www.thetimes.co.uk",
   "The Times-Picayune | New Orleans Advocate": "www.nola.com",
@@ -169,5 +152,22 @@
   "Wright-Weather": "hp2.wright-weather.com",
   "Yahoo! News": "news.yahoo.com",
   "Yahoo! Sports": "sports.yahoo.com",
-  "YouTube": "www.youtube.com"
+  "YouTube": "www.youtube.com",
+  "AP": [
+    "apnews.com",
+    "www.ap.org"
+  ],
+  "Axios": [
+    "axios.com",
+    "www.axios.com"
+  ],
+  "Reuters": [
+    "news.trust.org",
+    "www.reuters.com"
+  ],
+  "The Sun": [
+    "www.the-sun.co.uk",
+    "www.the-sun.com",
+    "www.thesun.co.uk"
+  ]
 }

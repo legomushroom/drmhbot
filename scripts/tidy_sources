@@ -3,16 +3,21 @@
 import json
 
 
+def sort_dict(d):
+    return {k: v for k, v in sorted(d.items())}
+
+
 def tidy(sources):
-    for source in sources:
-        domains = sources[source]
+    multi_domains = {}
 
-        try:
-            domains.sort()
-        except AttributeError:
-            pass
+    for name in list(sources):
+        domains = sources[name]
 
-    return sources
+        if isinstance(domains, list):
+            multi_domains[name] = sorted(domains)
+            del sources[name]
+
+    return sort_dict(sources) | sort_dict(multi_domains)
 
 
 def main():
@@ -22,10 +27,9 @@ def main():
 
         f.seek(0)
 
-        json.dump(tidied_sources, f, indent=2, sort_keys=True)
+        json.dump(tidied_sources, f, indent=2)
 
         f.write("\n")
-
 
 
 if __name__ == "__main__":
