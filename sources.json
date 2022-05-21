@@ -29,7 +29,6 @@
   "CBS New York": "newyork.cbslocal.com",
   "CBS News": "www.cbsnews.com",
   "CBS Sports": "www.cbssports.com",
-  "CNN": "www.cnn.com",
   "CNS News": "www.cnsnews.com",
   "Chicago Tribune": "www.chicagotribune.com",
   "Chron": "www.chron.com",
@@ -54,6 +53,7 @@
   "France 24": "www.france24.com",
   "Gallup": "news.gallup.com",
   "GasBuddy": "www.gasbuddy.com",
+  "Google": "www.google.com",
   "Gulf News": "www.gulfnews.com",
   "Indianapolis Star": "www.indystar.com",
   "Insider": "www.insider.com",
@@ -95,6 +95,7 @@
   "Politico": "www.politico.com",
   "Protocol": "www.protocol.com",
   "RadarOnline": "radaronline.com",
+  "Raw Story": "www.rawstory.com",
   "Real Clear Politics": "www.realclearpolitics.com",
   "Reason": "reason.com",
   "Richmond Times-Dispatch": "richmond.com",
@@ -160,6 +161,10 @@
   "Axios": [
     "axios.com",
     "www.axios.com"
+  ],
+  "CNN": [
+    "edition.cnn.com",
+    "www.cnn.com"
   ],
   "Reuters": [
     "news.trust.org",
