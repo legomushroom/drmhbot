@@ -2,9 +2,7 @@ version: "3.9"
 services:
   bot:
     image: ghcr.io/heyajulia/drmhbot
-    env_file: .env
-    # From a comment by @chrmarti on microsoft/vscode-remote-release#2524:
-    # https://github.com/microsoft/vscode-remote-release/issues/2524#issuecomment-627759728
+
     command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - ..:/workspace:cached
